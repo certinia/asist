@@ -1,0 +1,66 @@
+---
+# `enableallstandardrules` property used to enable or disable the standard rules. Set true/false to enable/disable all standard rules.
+# `excludefilesandfolders` property used to exclude files or folders from getting scanned. Add regex or name of files or folders.
+enableallstandardrules: true
+
+# `Note` : ASIST is supporting only forward slash(/) in the file and directory path.
+excludefilesandfolders:
+  - "/force-app-autotests/"
+  - "yui3_1"
+  - "yui_combo"
+  - "/.*sfdx/"
+
+# `dontgitignore` property used to disable the ignoring files or directories from .gitignore.
+dontgitignore: false
+# `dontforceignore` property used to disable the ignoring files or directories from .forceignore.
+dontforceignore: false 
+
+# cicdrules property used to run specific rules in CI/CD pipelines. Specify RuleIds of standard or custom rules.
+cicdrules: 
+  - "XSSLabel"
+  - "XSSMergeField"
+
+# `ruleoverrides` property is used to override some properties of standard rules. The following are defined below:
+# severity: Low|Medium|High|Critical
+# includepattern: specify files or folders to be included from scans.
+# excludepattern: specify files or folders to be excluded from scans.
+# `enabled` property is used to enable/disable a particular rule. It will override `enableAllStandardRules` property.
+ruleoverrides:
+  XSSTooltip: # Rule Id to be overriden
+    severity: Medium
+    enabled: true
+  XSSLabel:
+    includepattern: "\\.page$|\\.component$"
+    enabled: true
+  XSSDomHtml:
+    includepattern: "\\.js$|\\.page$|\\.component$"
+    excludepattern: "\\.test.js$"
+    enabled: true
+
+# `customregexrules` is used to create custom rules. The properties is to be defined are as follows:
+# name: name of custom rule
+# description: Contains brief information of custom rule
+# severity: Low|Medium|High|Critical
+# rulecategory: Security|Performance|Code Quality|UX
+# includepattern: specify file types to be scanned.
+# excludepattern: specify file types not to be scanned.
+# `enabled` property is used to enable/disable a custom rule.
+customregexrules:
+  CustomRule1:
+    name: customName1
+    description: Please fix this
+    enabled: false
+    severity: High
+    rulecategory: Security
+    pattern: Label
+    includepattern: "\\.component$|\\.page$|\\.cls$|\\.email"
+    excludepattern: ""
+  CustomRule2:
+    name: customName2
+    description: Please fix this custom rule
+    severity: Low
+    rulecategory: Performance
+    enabled: false
+    pattern: "System\\.debug"
+    includepattern: "\\.cls$"
+    excludepattern: ""

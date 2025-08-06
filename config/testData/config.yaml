@@ -1,0 +1,25 @@
+enableallstandardrules: true
+excludefilesandfolders:
+  - "/force-app-autotests/"
+
+dontgitignore: true
+dontforceignore: true 
+
+cicdrules: 
+  - "XSSLabel"
+
+ruleoverrides:
+  XSSTooltip:
+    severity: Medium
+    enabled: true
+
+customregexrules:
+  CustomRule1:
+    name: customName1
+    description: Please fix this
+    enabled: false
+    severity: High
+    rulecategory: Security
+    pattern: Label
+    includepattern: "\\.component$|\\.page$|\\.cls$|\\.email"
+    excludepattern: ""

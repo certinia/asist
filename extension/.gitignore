@@ -1,0 +1,13 @@
+out
+node_modules
+client/server
+.vscode-test
+*.vsix
+*.tsbuildinfo
+asist.exe
+asist_darwin_amd64
+asist_darwin_arm64
+asist_linux_amd64
+asist_linux_arm64
+client/configfiletemplate.yaml
+coverage

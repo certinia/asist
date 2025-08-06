@@ -1,0 +1,130 @@
+{
+  "name": "asist",
+  "displayName": "ASIST",
+  "description": "ASIST (Automated Security Issue Scanning Tool) is a vulnerability scanner for Force.com projects",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "version": "0.0.0",
+  "icon": "logo.png",
+  "publisher": "FinancialForce",
+  "author": "",
+  "categories": [],
+  "keywords": [
+    "security",
+    "salesforce",
+    "javascript",
+    "apex",
+    "visualforce",
+    "lwc",
+    "sast",
+    "static analysis",
+    "vulnerability",
+    "vscode",
+    "scanner",
+    "linter",
+    "xss",
+    "sharing",
+    "hardcoded credentials",
+    "code quality"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "certinia/asist"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onFileSystem:file"
+  ],
+  "main": "./client/out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.listRules",
+        "title": "List enabled rules",
+        "category": "ASIST"
+      },
+      {
+        "command": "extension.scanWorkspace",
+        "title": "Run on workspace",
+        "category": "ASIST"
+      },
+      {
+        "command": "extension.scanFile",
+        "title": "Run on file",
+        "category": "ASIST"
+      },
+      {
+        "command": "extension.preferences",
+        "title": "Preferences",
+        "category": "ASIST"
+      },
+      {
+        "command": "extension.editConfig",
+        "title": "Edit config file",
+        "category": "ASIST"
+      },
+      {
+        "command": "extension.createConfig",
+        "title": "Create config file",
+        "category": "ASIST"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Custom rules for ASIST",
+      "properties": {
+        "ASIST.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server."
+        },
+        "ASIST.customBinary.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables custom path to GO binary"
+        },
+        "ASIST.customBinary.path": {
+          "type": "string",
+          "description": "Path to the GO binary."
+        },
+        "ASIST.configFilePath": {
+          "type": "string",
+          "description": "(Optional) Path to the asist config file from workspace"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "prepublishOnly": "vsce package -o asist_extension.vsix",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+    "prettify:format:all": "prettier --write '**/src/**/*.ts'",
+    "test": "jest",
+    "test-coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.19",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.3.3",
+    "typescript": "^5.8.3",
+    "vscode-test": "^1.6.1"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^3.6.0"
+  }
+}

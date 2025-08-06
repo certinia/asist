@@ -1,0 +1,38 @@
+<apex:component layout="none" selfClosing="false" controller="SampleController">
+    <apex:outputPanel layout="none" rendered="{!NOT($CurrentPage.parameters.id == null)}">
+    <	apex:chart height="200" width="300" data="{!view.data}">
+    <apex:inputField value="{!record[field]}" label="{!HTMLENCODE(xyz)}" rendered="{!IF(field =='xyz' ,true,false)}"/>
+    <script type ="text/javascript">
+    var dummyFunction = function(){
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.controller.getData}',
+				 Id
+				function(result, event){
+				if(event.status && event.result) {
+					alert(event.result);
+				} else {
+					errorMessageSection(event.message);
+				}
+			}, {escape:false});
+		}
+    </script>
+	div.html("<s>xyz</s>")
+	<apex:pageBlock title="{!$Label.CustomTitle1}"><apex:pageBlock title="{!CustomTitle1}">
+<apex:outputPanel id="expanderContainer" onclick="SampleController.popupClicked({!$Label.xyz});" title="{!tooltip}" layout="inline">
+<script>
+	$TEST(TEST.idToIdSelector(index)).html(finalvalue);
+	$TEST(TEST.idToIdSelector(index)).html("finalvalue");
+	<apex:outputPanel layout="none" rendered="{!NOT(LEN($CurrentPage.parameters.id) == 0)}">
+	var html = "{!data}"
+</script>
+<script src="http://example.com"></script>
+<apex:includeScript value = "https://example.com"/>
+<apex:includeScript value="{!$CurrentPage.parameters.paramName}"/>
+<apex:includeScript value= http://example.com/>
+<apex:includeScript value="{!$Resource.MyJavascriptFile}"/>
+<apex:stylesheet value="https://example.com/style.css" />
+<!-- nosemgrep: use-SRI-for-CDNs -->
+<link rel="stylesheet" href="https://example.com/style.css" />
+<!-- nosemgrep: use-SRI-for-CDNs -->
+<link href="https://example.com/style.css" rel="stylesheet" />
+</apex:component>

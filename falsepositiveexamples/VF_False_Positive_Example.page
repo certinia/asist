@@ -1,0 +1,11 @@
+<apex:page cspHeader="true">
+    <!-- asist-ignore-begin:[XSSMergeField] No User Input -->
+    <apex:commandButton action="{! saveFields }" status="busy" value="Save" onclick="saveHandler({!permission})"/> 
+    <!-- asist-ignore-end -->
+    <script>
+    // asist-ignore-begin:[XSSMergeField,XSSLocationSearch]
+       var fields = "{!fieldsName}";
+       var search = location.search;
+    // asist-ignore-end
+    </script>
+</apex:page>
