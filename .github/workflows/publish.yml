@@ -1,0 +1,121 @@
+name: Release Workflow
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-vsce'
+
+jobs:
+  check-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      publish_binary: ${{ steps.set-vars.outputs.publish_binary }}
+      publish_extension: ${{ steps.set-vars.outputs.publish_extension }}
+      tag_number: ${{ steps.set-vars.outputs.tag_number }}
+
+    steps:
+      - name: Set output variables based on tag
+        id: set-vars
+        run: |
+          TAG="${GITHUB_REF##*/}"
+          echo "Tag is: $TAG"
+
+          if [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Extension and Binary release"
+            echo "publish_binary=true" >> $GITHUB_OUTPUT
+            echo "publish_extension=true" >> $GITHUB_OUTPUT
+          elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-vsce$ ]]; then
+            echo "Only extension release"
+            echo "publish_binary=false" >> $GITHUB_OUTPUT
+            echo "publish_extension=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tag format not recognized"
+            exit 1
+          fi
+
+          echo "tag_number=$TAG" >> $GITHUB_OUTPUT
+
+  release-binary:
+    if: ${{ needs.check-tag.outputs.publish_binary == 'true' }}
+    needs: check-tag
+    runs-on: ubuntu-latest
+    env:
+      Version: ${{ needs.check-tag.outputs.tag_number }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.0
+
+      - name: Build Binaries
+        run: make build-binaries
+
+      - name: Create GitHub Release and upload binaries
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$Version" \
+            --title="Release $Version" \
+            --notes-file=.github/release-notes.md \
+            asist.exe \
+            asist_darwin_amd64 \
+            asist_darwin_arm64 \
+            asist_linux_amd64 \
+            asist_linux_arm64
+
+
+  publish-extension:
+    if: >
+      always() &&
+      needs.check-tag.outputs.publish_extension == 'true' &&
+      (
+        needs.release-binary.result == 'success' || 
+        (needs.check-tag.outputs.publish_binary == 'false' && needs.release-binary.result == 'skipped')
+      )
+    needs: [check-tag, release-binary]
+    runs-on: ubuntu-latest
+    env:
+      TAG_NUMBER: ${{ needs.check-tag.outputs.tag_number }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+          cache: 'npm'
+
+      - name: Download latest released binaries
+        run: |
+          tagNumber="$(curl https://api.github.com/repos/${{ github.repository }}/releases/latest -s | jq .name -r)"
+          echo "Tag Number: $tagNumber"
+          baseUrl="https://github.com/${{ github.repository }}/releases/download/$tagNumber"
+          urls=("$baseUrl/asist.exe" "$baseUrl/asist_darwin_amd64" "$baseUrl/asist_darwin_arm64" "$baseUrl/asist_linux_amd64" "$baseUrl/asist_linux_arm64")
+
+          mkdir -p binaries
+          for url in "${urls[@]}"; do
+              echo "⬇️ Downloading $url"
+              curl -L -o "binaries/$(basename "$url")" "$url"
+          done
+
+      - name: Move binaries to extension directory and set execute permissions
+        run: |
+          chmod +x ./binaries/*
+          cp ./binaries/* ./extension
+
+      - name: Build vsix package
+        run: make build-vscode-extension
+
+      - name: Publish to VS Code Marketplace and Open VSX
+        run: |
+          cd extension
+          echo "Verify vsce token has not expired"
+          vsce verify-pat -p ${{ secrets.VSCE_TOKEN }}
+
+          echo "Publish to vsce"
+          vsce publish --packagePath asist_extension.vsix -p ${{ secrets.VSCE_TOKEN }}
