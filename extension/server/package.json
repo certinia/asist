@@ -1,7 +1,7 @@
 {
   "name": "apex-scanner-server",
   "description": "Language server for ASIST providing diagnostics, highlight occurrences, quick fix feature on opening of a file in VS code.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "publisher": "FinancialForce",
   "author": "",
   "engines": {

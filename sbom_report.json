@@ -1,10 +1,10 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.6",
-    "serialNumber": "urn:uuid:f2839376-bacf-4e19-9bec-28399c4a29f9",
+    "serialNumber": "urn:uuid:dfc8ce9d-3290-4eb0-af0b-56348515b1c4",
     "version": 1,
     "metadata": {
-        "timestamp": "2025-08-07T07:18:38Z",
+        "timestamp": "2025-08-07T12:54:48Z",
         "tools": {
             "components": [
                 {
@@ -36,10 +36,10 @@
         "component": {
             "name": "certinia-asist",
             "group": "",
-            "version": "0.0.0",
+            "version": "1.0.0",
             "description": "Static analysis tool based on string processing and regex which can scan the active file open in VSCode and highlight potential security issues. Built for Salesforce code, but compatible with any text file!",
-            "purl": "pkg:npm/certinia-asist@0.0.0",
-            "bom-ref": "pkg:npm/certinia-asist@0.0.0",
+            "purl": "pkg:npm/certinia-asist@1.0.0",
+            "bom-ref": "pkg:npm/certinia-asist@1.0.0",
             "author": "",
             "type": "application",
             "licenses": [
@@ -51,31 +51,31 @@
                 {
                     "group": "",
                     "name": "asist",
-                    "version": "0.0.0",
+                    "version": "1.0.0",
                     "licenses": [
                         {
                             "expression": "SEE LICENSE IN LICENSE.txt"
                         }
                     ],
-                    "purl": "pkg:npm/asist@0.0.0",
+                    "purl": "pkg:npm/asist@1.0.0",
                     "type": "application",
-                    "bom-ref": "pkg:npm/asist@0.0.0"
+                    "bom-ref": "pkg:npm/asist@1.0.0"
                 },
                 {
                     "group": "",
                     "name": "apex-scanner-server",
-                    "version": "0.0.0",
-                    "purl": "pkg:npm/apex-scanner-server@0.0.0",
+                    "version": "1.0.0",
+                    "purl": "pkg:npm/apex-scanner-server@1.0.0",
                     "type": "application",
-                    "bom-ref": "pkg:npm/apex-scanner-server@0.0.0"
+                    "bom-ref": "pkg:npm/apex-scanner-server@1.0.0"
                 },
                 {
                     "group": "",
                     "name": "apex-scanner-client",
-                    "version": "0.0.0",
-                    "purl": "pkg:npm/apex-scanner-client@0.0.0",
+                    "version": "1.0.0",
+                    "purl": "pkg:npm/apex-scanner-client@1.0.0",
                     "type": "application",
-                    "bom-ref": "pkg:npm/apex-scanner-client@0.0.0"
+                    "bom-ref": "pkg:npm/apex-scanner-client@1.0.0"
                 },
                 {
                     "group": "",
@@ -88,7 +88,7 @@
                     "properties": [
                         {
                             "name": "SrcGoMod",
-                            "value": "/home/anant/certinia/asist/go.mod"
+                            "value": "/home/dheeraj/asist/go.mod"
                         },
                         {
                             "name": "ModuleGoVersion",
@@ -152,7 +152,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/eslint"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/eslint"
                 },
                 {
                     "name": "SrcFile",
@@ -160,7 +160,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/eslint"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/eslint"
                 }
             ],
             "evidence": {
@@ -1475,7 +1475,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/acorn"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/acorn"
                 },
                 {
                     "name": "SrcFile",
@@ -1483,7 +1483,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/acorn"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/acorn"
                 }
             ],
             "evidence": {
@@ -1996,7 +1996,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/js-yaml"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/js-yaml"
                 },
                 {
                     "name": "SrcFile",
@@ -2004,7 +2004,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/js-yaml"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/js-yaml"
                 }
             ],
             "evidence": {
@@ -3372,7 +3372,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/node-which"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/node-which"
                 },
                 {
                     "name": "SrcFile",
@@ -3380,7 +3380,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/node-which"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/node-which"
                 }
             ],
             "evidence": {
@@ -5091,7 +5091,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/eslint-config-prettier"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/eslint-config-prettier"
                 }
             ],
             "evidence": {
@@ -5201,7 +5201,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/prettier"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/prettier"
                 },
                 {
                     "name": "SrcFile",
@@ -5209,7 +5209,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/prettier"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/prettier"
                 }
             ],
             "evidence": {
@@ -5478,7 +5478,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/node_modules/.bin/husky"
+                    "value": "/home/dheeraj/asist/node_modules/.bin/husky"
                 }
             ],
             "evidence": {
@@ -5535,7 +5535,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/vsce"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/vsce"
                 }
             ],
             "evidence": {
@@ -7131,7 +7131,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/semver"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/semver"
                 },
                 {
                     "name": "SrcFile",
@@ -7139,7 +7139,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/client/node_modules/.bin/semver"
+                    "value": "/home/dheeraj/asist/extension/client/node_modules/.bin/semver"
                 }
             ],
             "evidence": {
@@ -7196,7 +7196,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/uuid"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/uuid"
                 }
             ],
             "evidence": {
@@ -7571,7 +7571,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/is-inside-container"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/is-inside-container"
                 }
             ],
             "evidence": {
@@ -7628,7 +7628,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/is-docker"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/is-docker"
                 }
             ],
             "evidence": {
@@ -8321,7 +8321,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/json5"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/json5"
                 }
             ],
             "evidence": {
@@ -8961,11 +8961,11 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/@textlint/linter-formatter/node_modules/.bin/js-yaml"
+                    "value": "/home/dheeraj/asist/extension/node_modules/@textlint/linter-formatter/node_modules/.bin/js-yaml"
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/@istanbuljs/load-nyc-config/node_modules/.bin/js-yaml"
+                    "value": "/home/dheeraj/asist/extension/node_modules/@istanbuljs/load-nyc-config/node_modules/.bin/js-yaml"
                 }
             ],
             "evidence": {
@@ -9128,7 +9128,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/esparse, /home/anant/certinia/asist/extension/node_modules/.bin/esvalidate"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/esparse, /home/dheeraj/asist/extension/node_modules/.bin/esvalidate"
                 }
             ],
             "evidence": {
@@ -14520,7 +14520,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/@vscode/vsce/node_modules/.bin/glob"
+                    "value": "/home/dheeraj/asist/extension/node_modules/@vscode/vsce/node_modules/.bin/glob"
                 }
             ],
             "evidence": {
@@ -15744,7 +15744,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/@vscode/vsce/node_modules/.bin/markdown-it"
+                    "value": "/home/dheeraj/asist/extension/node_modules/@vscode/vsce/node_modules/.bin/markdown-it"
                 }
             ],
             "evidence": {
@@ -16013,7 +16013,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/mime"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/mime"
                 }
             ],
             "evidence": {
@@ -16176,7 +16176,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/parse-semver/node_modules/.bin/semver"
+                    "value": "/home/dheeraj/asist/extension/node_modules/parse-semver/node_modules/.bin/semver"
                 }
             ],
             "evidence": {
@@ -16339,7 +16339,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/secretlint"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/secretlint"
                 }
             ],
             "evidence": {
@@ -19207,7 +19207,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/prebuild-install"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/prebuild-install"
                 }
             ],
             "evidence": {
@@ -19841,7 +19841,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/rc"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/rc"
                 }
             ],
             "evidence": {
@@ -22494,7 +22494,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/tsc, /home/anant/certinia/asist/extension/node_modules/.bin/tsserver"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/tsc, /home/dheeraj/asist/extension/node_modules/.bin/tsserver"
                 }
             ],
             "evidence": {
@@ -23085,7 +23085,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/jest"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/jest"
                 }
             ],
             "evidence": {
@@ -23934,7 +23934,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/parser"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/parser"
                 }
             ],
             "evidence": {
@@ -24097,7 +24097,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/jsesc"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/jsesc"
                 }
             ],
             "evidence": {
@@ -24313,7 +24313,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/browserslist"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/browserslist"
                 }
             ],
             "evidence": {
@@ -24529,7 +24529,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/update-browserslist-db"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/update-browserslist-db"
                 }
             ],
             "evidence": {
@@ -24745,15 +24745,15 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/@babel/helper-compilation-targets/node_modules/.bin/semver"
+                    "value": "/home/dheeraj/asist/extension/node_modules/@babel/helper-compilation-targets/node_modules/.bin/semver"
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/@babel/core/node_modules/.bin/semver"
+                    "value": "/home/dheeraj/asist/extension/node_modules/@babel/core/node_modules/.bin/semver"
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/babel-plugin-istanbul/node_modules/.bin/semver"
+                    "value": "/home/dheeraj/asist/extension/node_modules/babel-plugin-istanbul/node_modules/.bin/semver"
                 }
             ],
             "evidence": {
@@ -30962,7 +30962,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/resolve"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/resolve"
                 }
             ],
             "evidence": {
@@ -32130,7 +32130,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/import-local-fixture"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/import-local-fixture"
                 }
             ],
             "evidence": {
@@ -32293,7 +32293,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/jest"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/jest"
                 }
             ],
             "evidence": {
@@ -32350,7 +32350,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/create-jest"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/create-jest"
                 }
             ],
             "evidence": {
@@ -32884,7 +32884,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/ts-jest"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/ts-jest"
                 }
             ],
             "evidence": {
@@ -32994,7 +32994,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/ejs"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/ejs"
                 }
             ],
             "evidence": {
@@ -33051,7 +33051,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/jake"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/jake"
                 }
             ],
             "evidence": {
@@ -33646,7 +33646,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/rimraf"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/rimraf"
                 },
                 {
                     "name": "cdx:npm:deprecated",
@@ -34549,7 +34549,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/.bin/mkdirp"
+                    "value": "/home/dheeraj/asist/extension/node_modules/.bin/mkdirp"
                 }
             ],
             "evidence": {
@@ -34606,7 +34606,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/node_modules/fstream/node_modules/.bin/rimraf"
+                    "value": "/home/dheeraj/asist/extension/node_modules/fstream/node_modules/.bin/rimraf"
                 },
                 {
                     "name": "cdx:npm:deprecated",
@@ -34773,7 +34773,7 @@
                 },
                 {
                     "name": "cdx:npm:binPaths",
-                    "value": "/home/anant/certinia/asist/extension/server/node_modules/.bin/installServerIntoExtension"
+                    "value": "/home/dheeraj/asist/extension/server/node_modules/.bin/installServerIntoExtension"
                 },
                 {
                     "name": "ImportedModules",
@@ -35236,7 +35236,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/cyphar/filepath-securejoin/@v/v0.4.1.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/cyphar/filepath-securejoin/@v/v0.4.1.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35293,7 +35293,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/dave/jennifer/@v/v1.7.1.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/dave/jennifer/@v/v1.7.1.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35350,7 +35350,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/go-git/gcfg/@v/v1.5.1-0.20230307220236-3a3c6141e376.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/go-git/gcfg/@v/v1.5.1-0.20230307220236-3a3c6141e376.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35407,7 +35407,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/go-git/go-billy/v5/@v/v5.6.2.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/go-git/go-billy/v5/@v/v5.6.2.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35464,7 +35464,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/go-git/go-git/v5/@v/v5.16.2.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/go-git/go-git/v5/@v/v5.16.2.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35521,7 +35521,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/jbenet/go-context/@v/v0.0.0-20150711004518-d14ea06fba99.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/jbenet/go-context/@v/v0.0.0-20150711004518-d14ea06fba99.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35578,7 +35578,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/github.com/jessevdk/go-flags/@v/v1.6.1.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/github.com/jessevdk/go-flags/@v/v1.6.1.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35635,7 +35635,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/golang.org/x/net/@v/v0.39.0.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/golang.org/x/net/@v/v0.39.0.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35692,7 +35692,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/golang.org/x/sys/@v/v0.33.0.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/golang.org/x/sys/@v/v0.33.0.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35749,7 +35749,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/gopkg.in/warnings.v0/@v/v0.1.2.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/gopkg.in/warnings.v0/@v/v0.1.2.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -35812,7 +35812,7 @@
             "properties": [
                 {
                     "name": "SrcGoMod",
-                    "value": "/home/anant/go/pkg/mod/cache/download/gopkg.in/yaml.v3/@v/v3.0.1.mod"
+                    "value": "/home/dheeraj/go/pkg/mod/cache/download/gopkg.in/yaml.v3/@v/v3.0.1.mod"
                 },
                 {
                     "name": "ModuleGoVersion",
@@ -36381,16 +36381,16 @@
             "dependsOn": []
         },
         {
-            "ref": "pkg:npm/certinia-asist@0.0.0",
+            "ref": "pkg:npm/certinia-asist@1.0.0",
             "dependsOn": [
                 "pkg:npm/eslint-config-prettier@10.1.5",
                 "pkg:npm/eslint-plugin-prettier@5.4.0",
                 "pkg:npm/eslint@9.27.0",
                 "pkg:npm/husky@9.1.7",
                 "pkg:npm/prettier@3.5.3",
-                "pkg:npm/asist@0.0.0",
-                "pkg:npm/apex-scanner-server@0.0.0",
-                "pkg:npm/apex-scanner-client@0.0.0",
+                "pkg:npm/asist@1.0.0",
+                "pkg:npm/apex-scanner-server@1.0.0",
+                "pkg:npm/apex-scanner-client@1.0.0",
                 "pkg:golang/github.com/certinia/asist"
             ]
         },
@@ -40024,7 +40024,7 @@
             ]
         },
         {
-            "ref": "pkg:npm/asist@0.0.0",
+            "ref": "pkg:npm/asist@1.0.0",
             "dependsOn": [
                 "pkg:npm/@types/jest@29.5.14",
                 "pkg:npm/@types/node@22.15.21",
@@ -40065,7 +40065,7 @@
             "dependsOn": []
         },
         {
-            "ref": "pkg:npm/apex-scanner-server@0.0.0",
+            "ref": "pkg:npm/apex-scanner-server@1.0.0",
             "dependsOn": [
                 "pkg:npm/vscode-languageserver-textdocument@1.0.12",
                 "pkg:npm/vscode-languageserver@9.0.1"
@@ -40084,7 +40084,7 @@
             "dependsOn": []
         },
         {
-            "ref": "pkg:npm/apex-scanner-client@0.0.0",
+            "ref": "pkg:npm/apex-scanner-client@1.0.0",
             "dependsOn": [
                 "pkg:npm/@types/vscode@1.100.0",
                 "pkg:npm/vscode-languageclient@9.0.1"
@@ -40163,7 +40163,7 @@
         {
             "bom-ref": "metadata-annotations",
             "subjects": [
-                "pkg:npm/certinia-asist@0.0.0"
+                "pkg:npm/certinia-asist@1.0.0"
             ],
             "annotator": {
                 "component": {
@@ -40181,8 +40181,8 @@
                     ]
                 }
             },
-            "timestamp": "2025-08-07T07:18:38Z",
-            "text": "This Software Bill-of-Materials (SBOM) document was created on Thursday, August 7, 2025 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'certinia-asist' with version '0.0.0'. The application also has 4 child modules/components. There are 661 components. 2 package type(s) and 34 purl namespaces are described in the document under components."
+            "timestamp": "2025-08-07T12:54:48Z",
+            "text": "This Software Bill-of-Materials (SBOM) document was created on Thursday, August 7, 2025 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'certinia-asist' with version '1.0.0'. The application also has 4 child modules/components. There are 661 components. 2 package type(s) and 34 purl namespaces are described in the document under components."
         }
     ]
 }
