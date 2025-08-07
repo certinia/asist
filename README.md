@@ -371,3 +371,99 @@ By default, ASIST will ignore files and folders defined inside .gitignore and .f
 ## 🏗️ [CONTRIBUTING](CONTRIBUTING.md)
 
 ## 🎫 [LICENSE](LICENSE.txt)
+
+## ❤️ Contributors
+
+A big thank you to everyone who has contributed to ASIST!
+
+<table>
+  <tr>
+  <td align="center">
+      <a href="https://github.com/sdoylecertinia">
+        <img src="https://avatars.githubusercontent.com/sdoylecertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="sdoylecertinia"/><br />
+        <sub><b>Shaun</b></sub>
+      </a>
+  </td>
+  <td align="center">
+      <a href="https://github.com/pjaincertinia2025">
+        <img src="https://avatars.githubusercontent.com/pjaincertinia2025" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Pragati"/><br />
+        <sub><b>Pragati</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/gkumarcertinia">
+        <img src="https://avatars.githubusercontent.com/gkumarcertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Govardhan"/><br />
+        <sub><b>Govardhan</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/hdaulani">
+        <img src="https://avatars.githubusercontent.com/hdaulani" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Hemant"/><br />
+        <sub><b>Hemant</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/adawercertinia">
+        <img src="https://avatars.githubusercontent.com/adawercertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Abhishek"/><br />
+        <sub><b>Abhishek</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/dsinghcertinia">
+        <img src="https://avatars.githubusercontent.com/dsinghcertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Dheeraj"/><br />
+        <sub><b>Dheeraj</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/ssonicertinia">
+        <img src="https://avatars.githubusercontent.com/ssonicertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Shivam"/><br />
+        <sub><b>Shivam</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ajaincertinia">
+        <img src="https://avatars.githubusercontent.com/ajaincertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Anant"/><br />
+        <sub><b>Anant</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/sgulyanicertinia">
+        <img src="https://avatars.githubusercontent.com/sgulyanicertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Saijal"/><br />
+        <sub><b>Saijal</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+  <td align="center">
+      <a href="https://github.com/pswamicertinia">
+        <img src="https://avatars.githubusercontent.com/pswamicertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Pawan"/><br />
+        <sub><b>Pawan</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/nbhatiacertinia">
+        <img src="https://avatars.githubusercontent.com/nbhatiacertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Nikhil"/><br />
+        <sub><b>Nikhil</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/manojkumar2019">
+        <img src="https://avatars.githubusercontent.com/manojkumar2019" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Manoj"/><br />
+        <sub><b>Manoj</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/halbertsson_certemu">
+        <img src="https://avatars.githubusercontent.com/halbertsson_certemu" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Hal"/><br />
+        <sub><b>Hal</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/mamorriscertinia">
+        <img src="https://avatars.githubusercontent.com/mamorriscertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Mathew"/><br />
+        <sub><b>Matthew</b></sub>
+      </a>
+    </td>
+    
+  </tr>
+</table>
