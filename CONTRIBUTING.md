@@ -4,7 +4,7 @@ Thank you for your interest in contributing to ASIST\! We welcome contributions 
 
 ## **Code of Conduct**
 
-Please note that this project is released with a [Contributor Covenant Code of Conduct](https://github.com/certinia/asist/CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
+Please note that this project is released with a [Contributor Covenant Code of Conduct](https://github.com/certinia/asist/blob/main/CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
 ## **How Can I Contribute?**
 
@@ -17,7 +17,7 @@ Here are many ways you can contribute:
 * **Reviewing Code:** Review pull requests from other contributors.
 
 ## **Getting Started**
-Refer [DEVELOPING.md](https://github.com/certinia/asist/DEVELOPING.md)
+Refer [DEVELOPING.md](https://github.com/certinia/asist/blob/main/DEVELOPING.md)
 
 ## **Contributing Code**
 
@@ -42,7 +42,7 @@ Refer [DEVELOPING.md](https://github.com/certinia/asist/DEVELOPING.md)
 12. **Write Tests:** Write multiple unit-test cases for methods to cover all the scenarios  
 13. **Run Tests:** Make sure all tests pass:  
     go test ./...
-14. **Build and Run:** Build and run ASIST locally to verify your changes. Refer [DEVELOPING.md](https://github.com/certinia/asist/DEVELOPING.md)
+14. **Build and Run:** Build and run ASIST locally to verify your changes. Refer [DEVELOPING.md](https://github.com/certinia/asist/blob/main/DEVELOPING.md)
 15. **Commit Your Changes:**  
     git add .  
     git commit \-m "feat: Add new feature"

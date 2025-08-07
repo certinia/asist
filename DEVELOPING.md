@@ -9,7 +9,7 @@ Welcome to the development guide for the **ASIST** VS Code extension! This docum
 
 1. [Prerequisites](#-prerequisites)
 2. [Setting Up the Development Environment](#-setting-up-the-development-environment)
-3. [Building and Bundling](#-building-and-bundling)
+3. [Building and Bundling](#%EF%B8%8F-building-and-bundling)
 4. [Running the Extension Locally](#-running-the-extension-locally)
 5. [Packaging the Extension](#-packaging-the-extension)
 
@@ -32,7 +32,7 @@ To get started, clone this repository and install the necessary dependencies.
 
 **Clone the forked repository:** 
 ```zsh
-git clone https://github.com/your-username/asist.git
+git clone https://github.com/certinia/asist.git
 cd <repo-name>
 ```
 * Set up your local environment as described in the README. This usually involves dependencies.
@@ -111,14 +111,11 @@ This command will create a .vsix package file that you can install locally.
 
 # Common Developer pitfalls when testing
 
-- Setting is already registered when running in debug mode.
-- This is because your release ASIST extension is conflicting with your test version
-- To resolve this you need to uninstall ASIST temporarily and remove it from \~/.vscode/extensions
-- When testing is complete, simply re-install ASIST.
+Setting is already registered when running in debug mode. This is because your release ASIST extension is conflicting with your test version to resolve this you need to uninstall ASIST temporarily and remove it from \~/.vscode/extensions when testing is complete, simply re-install ASIST.
 
 # 🚀 Making a release (For the maintainers)
 
-- A release will be made by the ASIST maintainers, for a specific version.
-- To make the release the maintainer will create and push a git tag with a specific version on repo.
-- Then run the publish build.
-- Once the version has successfully released, it needs to be updated in `.env` file (this file is used by Makefile for providing versions to local builds).
+- Ensure that the latest SBOM report is available at the root of repository before releasing.
+- A release will be made by the ASIST maintainers for a specific version. To make the release, the maintainer will create and push a git tag with a particular version on the repo.
+- Verify that the publish build is executed successfully.
+- Once the version has been successfully released, it needs to be updated in the .env file (this file is used by Makefile for providing versions to local builds).

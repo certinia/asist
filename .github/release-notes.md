@@ -9,4 +9,4 @@
   * Introduced the official VS Code extension for ASIST, enabling direct IDE integration for SAST analysis.
   * ASIST is also available as a Go package.
 
-### [Full Changelog](https://github.com/certinia/asist/main/CHANGELOG.md)
+### [Full Changelog](https://github.com/certinia/asist/blob/main/changelog.md)

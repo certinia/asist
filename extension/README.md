@@ -54,4 +54,4 @@ This extension is shipped with prebuilt ASIST binaries, but if you need to speci
 
 # Developer guide
 
-Refer [DEVELOPING.md](https://github.com/certinia/asist/DEVELOPING.md)
+Refer [DEVELOPING.md](https://github.com/certinia/asist/blob/main/DEVELOPING.md)

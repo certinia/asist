@@ -41,7 +41,7 @@ jobs:
     needs: check-tag
     runs-on: ubuntu-latest
     env:
-      Version: ${{ needs.check-tag.outputs.tag_number }}
+      VERSION: ${{ needs.check-tag.outputs.tag_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -58,8 +58,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "$Version" \
-            --title="Release $Version" \
+          gh release create "$VERSION" \
+            --title="Release $VERSION" \
             --notes-file=.github/release-notes.md \
             asist.exe \
             asist_darwin_amd64 \
@@ -90,9 +90,12 @@ jobs:
           node-version: '22.12.0'
           cache: 'npm'
 
+      - name: Install vsce globally
+        run: npm install -g @vscode/vsce
+
       - name: Download latest released binaries
         run: |
-          tagNumber="$(curl https://api.github.com/repos/${{ github.repository }}/releases/latest -s | jq .name -r)"
+          tagNumber="$(curl https://api.github.com/repos/${{ github.repository }}/releases/latest -s | jq .tag_name -r)"
           echo "Tag Number: $tagNumber"
           baseUrl="https://github.com/${{ github.repository }}/releases/download/$tagNumber"
           urls=("$baseUrl/asist.exe" "$baseUrl/asist_darwin_amd64" "$baseUrl/asist_darwin_arm64" "$baseUrl/asist_linux_amd64" "$baseUrl/asist_linux_arm64")
@@ -109,7 +112,7 @@ jobs:
           cp ./binaries/* ./extension
 
       - name: Build vsix package
-        run: make build-vscode-extension
+        run: make build-vscode-extension-binary-exist
 
       - name: Publish to VS Code Marketplace and Open VSX
         run: |
@@ -118,4 +121,4 @@ jobs:
           vsce verify-pat -p ${{ secrets.VSCE_TOKEN }}
 
           echo "Publish to vsce"
-          vsce publish --packagePath asist_extension.vsix -p ${{ secrets.VSCE_TOKEN }}
+          vsce publish --packagePath asist.vsix -p ${{ secrets.VSCE_TOKEN }}

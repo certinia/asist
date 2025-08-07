@@ -1,7 +1,7 @@
 import * as config from "../config";
 import * as fs from "fs";
-import { join } from "path";
 import * as vscode from "vscode";
+import { PATH_SEPARATOR } from "../constants";
 
 const mockedWorkspace = vscode.workspace as unknown as {
 	getConfiguration: jest.Mock;
@@ -23,7 +23,7 @@ describe("Check Config functionality", () => {
 
 	describe("getConfigFileOption", () => {
 		it("returns path for custom file if it exists", () => {
-			const customPath = join(mockedWorkspacePath, mockedConfigYamlName);
+			const customPath = mockedWorkspacePath + PATH_SEPARATOR + mockedConfigYamlName;
 			mockExistsSync.mockReturnValueOnce(true);
 
 			const result = config.getConfigFileOption(mockedWorkspacePath, mockedConfigYamlName);
@@ -34,7 +34,7 @@ describe("Check Config functionality", () => {
 			mockExistsSync.mockReturnValueOnce(false).mockReturnValueOnce(true);
 
 			const result = config.getConfigFileOption(mockedWorkspacePath, mockedConfigYamlName);
-			expect(result).toBe(join(mockedWorkspacePath, ".asist.yaml"));
+			expect(result).toBe(mockedWorkspacePath + PATH_SEPARATOR + ".asist.yaml");
 		});
 
 		it("falls back to .asist.json if yaml is missing", () => {
@@ -44,7 +44,7 @@ describe("Check Config functionality", () => {
 				.mockReturnValueOnce(true);
 
 			const result = config.getConfigFileOption(mockedWorkspacePath, mockedConfigYamlName);
-			expect(result).toBe(join(mockedWorkspacePath, ".asist.json"));
+			expect(result).toBe(mockedWorkspacePath + PATH_SEPARATOR + ".asist.json");
 		});
 
 		it("returns empty string if no file exists", () => {
@@ -61,7 +61,7 @@ describe("Check Config functionality", () => {
 			mockedWorkspace.workspaceFolders = [{ uri: { fsPath: mockedWorkspacePath } }];
 			mockedWorkspace.getConfiguration.mockReturnValue({ get: mockGet });
 
-			const fullPath = join(mockedWorkspacePath, mockedConfigYamlName);
+			const fullPath = mockedWorkspacePath + PATH_SEPARATOR + mockedConfigYamlName;
 			(fs.existsSync as jest.Mock).mockReturnValue(true);
 
 			const result = config.getConfigOption();
@@ -82,9 +82,9 @@ describe("Check Config functionality", () => {
 	});
 
 	describe("getConfigFilePath", () => {
-		const mockedConfigYamlPath1 = join(mockedWorkspacePath, "custom.yaml");
-		const mockedConfigYamlPath2 = join(mockedWorkspacePath, ".asist.yaml");
-		const mockedConfigJsonPath = join(mockedWorkspacePath, ".asist.json");
+		const mockedConfigYamlPath1 = mockedWorkspacePath + PATH_SEPARATOR + "custom.yaml";
+		const mockedConfigYamlPath2 = mockedWorkspacePath + PATH_SEPARATOR + ".asist.yaml";
+		const mockedConfigJsonPath = mockedWorkspacePath + PATH_SEPARATOR + ".asist.json";
 
 		it("returns path for custom file if it exists", () => {
 			const customPath = mockedConfigYamlPath1;

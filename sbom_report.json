@@ -1,10 +1,10 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.6",
-    "serialNumber": "urn:uuid:b3e86644-0abb-41bb-bc89-145396b16697",
+    "serialNumber": "urn:uuid:f2839376-bacf-4e19-9bec-28399c4a29f9",
     "version": 1,
     "metadata": {
-        "timestamp": "2025-08-06T06:21:41Z",
+        "timestamp": "2025-08-07T07:18:38Z",
         "tools": {
             "components": [
                 {
@@ -5474,7 +5474,7 @@
                 },
                 {
                     "name": "ResolvedUrl",
-                    "value": "https://artifactory.dev.financialforce.com/artifactory/api/npm/ffdc-npm/husky/-/husky-9.1.7.tgz"
+                    "value": "https://registry.npmjs.org/husky/-/husky-9.1.7.tgz"
                 },
                 {
                     "name": "cdx:npm:binPaths",
@@ -5496,7 +5496,10 @@
                         "concludedValue": "package-lock.json"
                     }
                 ]
-            }
+            },
+            "tags": [
+                "registry"
+            ]
         },
         {
             "group": "@vscode",
@@ -40178,8 +40181,8 @@
                     ]
                 }
             },
-            "timestamp": "2025-08-06T06:21:41Z",
-            "text": "This Software Bill-of-Materials (SBOM) document was created on Wednesday, August 6, 2025 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'certinia-asist' with version '0.0.0'. The application also has 4 child modules/components. There are 661 components. 2 package type(s) and 34 purl namespaces are described in the document under components."
+            "timestamp": "2025-08-07T07:18:38Z",
+            "text": "This Software Bill-of-Materials (SBOM) document was created on Thursday, August 7, 2025 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'certinia-asist' with version '0.0.0'. The application also has 4 child modules/components. There are 661 components. 2 package type(s) and 34 purl namespaces are described in the document under components."
         }
     ]
 }

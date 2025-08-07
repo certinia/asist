@@ -1,6 +1,6 @@
-<center>
+<div align="center">
 <img height="200px" src="images/logo.svg"></img>
-</center>
+</div>
 
 # ASIST (Automated Security Issue Scanning Tool)
 [![Go Reference](https://pkg.go.dev/badge/github.com/certinia/asist.svg)](https://pkg.go.dev/github.com/certinia/asist)
@@ -35,7 +35,7 @@ Originally built for internal use at Certinia to support Security Reviews, we ha
 
 ### Precompiled releases
 
-1. Download the binary of your choice from [releases](releases).
+1. Download the binary of your choice from [releases](https://github.com/certinia/asist/releases).
 2. Place the binary somewhere in your PATH
 
 ### As a Go package
