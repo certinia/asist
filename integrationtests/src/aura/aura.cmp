@@ -1,0 +1,7 @@
+<aura:component >
+    <aura:unescapedHtml value="{!v.cval}" />
+    <form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>
+    <iframe srcdoc="{!xyz}" />
+    <p style="float:right">this is right</p>
+    <p style="position:absolute">this is absolute position</p>
+</aura:component>

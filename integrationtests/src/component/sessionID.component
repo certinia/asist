@@ -1,0 +1,6 @@
+<apex:component layout="none" selfClosing="false" controller="SampleController">
+	<script>
+		let sid = "{!JSENCODE($Api.Session_ID)}";
+	</script>
+<a href="http://example.com"/>
+</apex:component>

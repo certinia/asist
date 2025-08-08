@@ -1,0 +1,62 @@
+name: CI Build
+
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [22.12.0]
+        go-version: [1.23.0]
+
+    steps:
+      - name: Checkout repository ASIST
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Build Go
+        run: go build
+
+      - name: Install dependencies for extension
+        run: |
+          cd extension
+          npm ci
+          npm run postinstall
+
+      - name: Build extension (TypeScript)
+        run: |
+          cd extension
+          npm run vscode:prepublish
+
+      - name: Run Jest tests
+        run: |
+          cd extension
+          npm run test
+
+      - name: Run Go unit tests
+        run: make unit-test
+
+      - name: Run Go integration tests
+        run: make integration-tests
+
+

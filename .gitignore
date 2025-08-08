@@ -1,0 +1,9 @@
+.vscode
+.sfdx
+asist_linux_*
+asist_darwin_*
+asist.exe
+node_modules
+.asist.yaml
+asist
+**/.DS_Store

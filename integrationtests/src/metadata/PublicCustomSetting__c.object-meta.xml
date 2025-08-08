@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+	<customSettingsType>List</customSettingsType>
+	<description>Public Setting</description>
+	<enableEnhancedLookup>false</enableEnhancedLookup>
+	<enableFeeds>false</enableFeeds>
+	<label>Public Setting</label>
+	<visibility>Public</visibility>
+</CustomObject>

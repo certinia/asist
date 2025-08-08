@@ -1,0 +1,16 @@
+{
+  "name": "apex-scanner-client",
+  "description": "Client-side code for the ASIST extension, responsible for communicating with the language server to scan code and display vulnerable occurrences in output channel using ASIST binary.",
+  "author": "",
+  "version": "1.0.0",
+  "publisher": "FinancialForce",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0"
+  }
+}

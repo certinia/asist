@@ -1,0 +1,66 @@
+<apex:page controller="xyz" extensions="abc" lightningStylesheets="true">
+    <script type="text/javascript">
+        function getText(cell) {
+            return isTest ? cell.innerHTML : cell.innerText;
+        }
+    </script>
+    <apex:outputLabel escape="false" value="{!xyz}"/><apex:outputLabel escape="false" value="{!xyz}"/><apex:outputLabel escape="false" value="{!xyz}"/><apex:outputLabel escape="falseasd" value="{!xyz}"/>
+    <apex:outputPanel layout="none" rendered="{!NOT($CurrentPage.parameters.id == null)}">
+    <apex:chart height="200" width="300" data="{!view.data}">
+    <apex:inputField value="{!record[field]}" label="{!HTMLENCODE(xyz)}" rendered="{!IF(field =='xyz' ,true,false)}"/><apex:outputField value="{!record[field]}" label="{!xyz}" rendered="{!IF(field =='xyz' ,true,false)}"/>
+    <script type ="text/javascript">
+    var dummyFunction = function(){
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.controller.getData}',
+				 Id
+				function(result, event){
+				if(event.status && event.result) {
+					alert(event.result);
+				} else {
+					errorMessageSection(event.message);
+				}
+			}, {escape  : false});
+		}
+		var onFormFinished = function (event) {
+        }
+    </script>
+    <apex:outputLabel value="{!$Label.SampleTitle}" for="accCurr"/><apex:outputLabel value="{!$Label.SampleTitle}" for="acc"/><apex:outputLabel value="{!JSENCODE($Label.SampleTitle)}" for="acc"/>
+<apex:inputField value="{!record[field]}" label="{!HTMLENCODE(xyz)}" rendered="{!IF(field =='xyz' ,true,false)}"/><apex:inputField value="{!record[field]}" label="{!HTMLENCODE(xyz)}" rendered="{!IF(field =='xyz' ,true,false)}"/>
+<apex:outputLabel value="{!HTMLENCODE($Label.SampleTitle)}" for="acc"/>
+<apex:outputLabel value="{!JSINHTMLENCODE($Label.SampleTitle)}" for="acc"/>
+<apex:inputField value="{!record[field]}" label="xyz" rendered="{!IF(field =='xyz' ,true,false)}"/>
+<script>
+$Params.HasCreatePermissions = Boolean({!hasCreatePermissions});
+</script>
+<apex:inputField id="overrideGLASUT" value="{!productLineItem.Product}" onChange="TEST.indicatorOn('{!JSINHTMLENCODE($Label.SampleTitle2)}'); onChangeValue({!productLineItem.Product - 1})" rendered="{!isLineDeleted}"/>
+<script>
+    content: \"{!$Label.PaginationBefore}
+    content: \"{!JSENCODE($Label.PaginationBefore)}
+</script>
+<style>
+    content: "{!$Label.PaginationBefore} " counter(page) " {!$Label.PaginationAfter} " counter(pages);
+    content: "{!$Label.PaginationBefore} " counter(page) " {!HTMLENCODE($Label.PaginationAfter)} " counter(pages);
+    content: "{!HTMLENCODE($Label.PaginationBefore)} " counter(page) " {!HTMLENCODE($Label.PaginationAfter)} " counter(pages);
+    "address": "{!JSENCODE(HTMLENCODE(result.resource.TestResource1 + ' ' + result.resource.TestResource2) + '<br/>' + HTMLENCODE(result.resource.TestResource3 + ', ' + result.resource.TestResource4))}",
+</style>
+<apex:commandButton value="{!$Label.SaveButton}" action="{!saveItem}" id="save_h" onClick="javascript:alert('{!$Label.alertOnSave}');" styleclass="hiddensubmit"/>
+<apex:commandButton value="{!$Label.SaveButton}" action="{!saveItem}" id="save_h" onClick="javascript:alert('{!JSINHTMLENCODE($Label.alertOnSave)}');" styleclass="hiddensubmit"/>
+<th>{!$Label.xyz}</th><script>{!$Label.xyz}</script>
+<script src="{!$Label.xyz}"/>
+$Params.HasCreatePermissions = Boolean({!hasCreatePermissions});
+</script>
+<apex:inputField id="input1" value="{!productLineItem.Product}" onChange="CODA.indicatorOn('{!JSINHTMLENCODE($Label.SampleTitle3)}'); onChangeQuantity({!productLineItem.Units - 1})" rendered="{!displayProducts}"/>
+<script>indicatortxt.innerHTML=txt;</script>
+<script>
+    indicatortxt.innerHTML="txt";
+    <apex:outputPanel layout="none" rendered="{!NOT($CurrentPage.parameters.id == null)}">
+    var html = {!getData}
+</script>
+<apex:includeScript value="http://example.com">
+<script src="http://example.com"></script>
+<script type='text/javascript' src="http://example.com"></script>
+<style type = "text/css">.topbanner {
+  background: url("https://www.example.com/redball.png")
+}
+</style>
+</apex:page>
