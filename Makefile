@@ -48,4 +48,4 @@ build-vscode-extension-prepublish: copy-config-file build-binaries-for-extension
 	cd extension && npm install && npm run prepublishOnly
 
 build-vscode-extension-binary-exist: copy-config-file
-	cd extension && npm install && vsce package -o '${PACKAGE_NAME}'
+	cd extension && npm install && vsce package

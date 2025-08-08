@@ -67,10 +67,7 @@ func createCustomRule(ruleMetadata config.CustomRegexRule, ruleID rules.RuleID) 
 
 /**
  * GetRuleIdsToRun - Returns a map of rule IDs (standard, custom, CI/CD, specific) mapped to a boolean.
- * GetRuleIdsToRun - Returns a map of rule IDs (standard, custom, CI/CD, specific) mapped to a boolean.
- *
  * - If specificRuleIds are provided, returns map[specificRuleIds] = true.
- * - If CI/CD rules are enabled and a config file is provided, returns map[CICDRuleIds] = true.
  * - If CI/CD rules are enabled and a config file is provided, returns map[CICDRuleIds] = true.
  * - If a config is provided, overrides standardRuleIds with the provided values and includes custom rule IDs.
  * - Otherwise, returns map[standardRuleIds] = true.

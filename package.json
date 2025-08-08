@@ -1,6 +1,6 @@
 {
   "name": "certinia-asist",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Static analysis tool based on string processing and regex which can scan the active file open in VSCode and highlight potential security issues. Built for Salesforce code, but compatible with any text file!",
   "main": "index.js",
   "files": [

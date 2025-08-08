@@ -79,7 +79,7 @@ jobs:
     needs: [check-tag, release-binary]
     runs-on: ubuntu-latest
     env:
-      TAG_NUMBER: ${{ needs.check-tag.outputs.tag_number }}
+      VERSION: ${{ needs.check-tag.outputs.tag_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -121,4 +121,4 @@ jobs:
           vsce verify-pat -p ${{ secrets.VSCE_TOKEN }}
 
           echo "Publish to vsce"
-          vsce publish --packagePath asist.vsix -p ${{ secrets.VSCE_TOKEN }}
+          vsce publish --packagePath asist-${{ needs.check-tag.outputs.tag_number }}.vsix -p ${{ secrets.VSCE_TOKEN }}
