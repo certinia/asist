@@ -53,7 +53,7 @@ npm i
 
 ## ⚙️ Building and Bundling
 
-You can build the extension and prepare it for local development, run the watcher to re build automatically or production use. Here's how:
+You can build the extension and prepare it for local development, run the watcher to re-build automatically for production use. Here's how:
 
 1. **For Binary:**
 ```zsh
@@ -99,7 +99,7 @@ Ensure all tests pass before submitting your pull request.
 
 ## 📦 Packaging the Extension
 
-This is for information only packaging and releasing is handled in Github.
+This is for information only. Packaging and releasing are handled in GitHub.
 Once you're ready to package the extension for distribution:
 
 Package the extension:

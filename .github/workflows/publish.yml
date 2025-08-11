@@ -3,8 +3,8 @@ name: Publish ASIST
 on:
   push:
     tags:
-      - 'v*.*.*'
-      - 'v*.*.*-vsce'
+      - '*.*.*'
+      - '*.*.*-vsce'
 
 jobs:
   check-tag:
@@ -21,11 +21,11 @@ jobs:
           TAG="${GITHUB_REF##*/}"
           echo "Tag is: $TAG"
 
-          if [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Extension and Binary release"
             echo "publish_binary=true" >> $GITHUB_OUTPUT
             echo "publish_extension=true" >> $GITHUB_OUTPUT
-          elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-vsce$ ]]; then
+          elif [[ "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+-vsce$ ]]; then
             echo "Only extension release"
             echo "publish_binary=false" >> $GITHUB_OUTPUT
             echo "publish_extension=true" >> $GITHUB_OUTPUT
@@ -78,8 +78,6 @@ jobs:
       )
     needs: [check-tag, release-binary]
     runs-on: ubuntu-latest
-    env:
-      VERSION: ${{ needs.check-tag.outputs.tag_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

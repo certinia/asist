@@ -268,7 +268,7 @@ Blob hash = Crypto.generateDigest('MD5', sidBlob);
 
 In markup languages, comments should be set in `<!-- comments -->` when possible.
 
-In any other file types, the user must figure out the more appropriate way to insert the `asist-ignore-begin` and `asist-ignore-end` statements. Technically, it dosen't matter where you put them!
+In any other file types, the user must figure out the more appropriate way to insert the `asist-ignore-begin` and `asist-ignore-end` statements. Technically, it doesn't matter where you put them!
 
 _**Note**: Nested false positive tags are not supported._
 
