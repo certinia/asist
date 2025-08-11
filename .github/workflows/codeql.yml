@@ -22,6 +22,7 @@ on:
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
+  workflow_dispatch:
 
 jobs:
   analyze:

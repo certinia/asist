@@ -20,7 +20,7 @@ The extension is available on the [Visual Studio Code Marketplace](https://marke
 ASIST commands can be run in VSCode by pressing `Ctrl+Shift+P` and typing `ASIST` to get the list of available commands.
 Note that some commands will print results to the "Output" tab in VSCode (select `ASIST` in the channel dropdown).
 
-![ASIST Extension commands](https://github.com/certinia/asist/extension/image-1.png)
+![ASIST Extension commands](https://github.com/certinia/asist/blob/main/extension/image-1.png)
 
 - **Run on file:** Runs a scan on the current opened file.
 - **Run on workspace:** Runs a scan on the current project workspace.
