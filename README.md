@@ -195,9 +195,9 @@ Most of the configuration required for your project will be defined in a configu
 
 ASIST supports YAML or JSON config files.
 
-When scanning a folder, ASIST will automatically detect either `.asist.yaml` or `.asist.yaml` from the top-level folder being scanned.
+When scanning a folder, ASIST will automatically detect either `.asist.yaml` or `.asist.json` from the top-level folder being scanned.
 
-Configuration files can also can be explicitly specified using the `-c` argument (note that this is required when scanning a single file).
+Configuration files can also be explicitly specified using the `-c` argument (note that this is required when scanning a single file).
 
 Within the config file, you can:
 
@@ -268,7 +268,7 @@ Blob hash = Crypto.generateDigest('MD5', sidBlob);
 
 In markup languages, comments should be set in `<!-- comments -->` when possible.
 
-In any other file types, the user must figure out the more appropriate way to insert the `asist-ignore-begin` and `asist-ignore-end` statements. Technically, it doens't matter where you put them!
+In any other file types, the user must figure out the more appropriate way to insert the `asist-ignore-begin` and `asist-ignore-end` statements. Technically, it dosen't matter where you put them!
 
 _**Note**: Nested false positive tags are not supported._
 
