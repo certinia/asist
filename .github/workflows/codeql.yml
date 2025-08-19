@@ -17,11 +17,13 @@ on:
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
+      - "**/integrationtests/src/*"
   pull_request:
     branches: ["main"]
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
+      - "**/integrationtests/src/*"
   workflow_dispatch:
 
 jobs:
