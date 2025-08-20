@@ -21,9 +21,10 @@
 !client/configfiletemplate.yaml
 !client/package.json
 !client/out/**
-!client/node_modules/**
+!client/node_modules/vscode-languageclient/**
 
 # Server
 !server/package.json
 !server/out/**
-!server/node_modules/**
+!server/node_modules/vscode-languageserver/**
+!server/node_modules/vscode-languageserver-textdocument/**
