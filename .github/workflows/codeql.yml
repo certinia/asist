@@ -14,8 +14,16 @@ name: "CodeQL"
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+      - "**/*.txt"
+      - "**/integrationtests/src/*"
   pull_request:
     branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+      - "**/*.txt"
+      - "**/integrationtests/src/*"
   workflow_dispatch:
 
 jobs:
@@ -39,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [go, github-actions]
+        language: ["javascript-typescript", "go"]
         # CodeQL supports [ 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift' ]
         # Use only 'java-kotlin' to analyze code written in Java, Kotlin or both
         # Use only 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
