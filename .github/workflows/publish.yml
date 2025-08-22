@@ -6,12 +6,6 @@ on:
       - '*.*.*'
       - '*.*.*-vsce'
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   check-tag:
     runs-on: ubuntu-latest
@@ -46,6 +40,8 @@ jobs:
     if: ${{ needs.check-tag.outputs.publish_binary == 'true' }}
     needs: check-tag
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       VERSION: ${{ needs.check-tag.outputs.tag_number }}
     steps:
