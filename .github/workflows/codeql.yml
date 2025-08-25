@@ -17,11 +17,13 @@ on:
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
+      - "**/integrationtests/src/*"
   pull_request:
     branches: ["main"]
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
+      - "**/integrationtests/src/*"
   workflow_dispatch:
 
 jobs:
@@ -98,9 +100,3 @@ jobs:
         with:
           category: "/language:${{matrix.language}}"
 
-      # Upload build results as artifact
-      - name: Upload SARIF output
-        uses: actions/upload-artifact@v4
-        with:
-          name: codeql-sarif-${{ matrix.language }}
-          path: results/*.sarif
