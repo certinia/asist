@@ -1,8 +1,9 @@
 package ruleset
 
 import (
+	"log"
+
 	"github.com/certinia/asist/config"
-	"github.com/certinia/asist/errorhandler"
 	"github.com/certinia/asist/message"
 	"github.com/certinia/asist/parser/options"
 	"github.com/certinia/asist/rules"
@@ -39,10 +40,12 @@ func CreateAndOverrideRules(standardRuleIDs, customRuleIds []rules.RuleID, confi
 		if err != nil {
 			return nil, err
 		}
-		if isStandardRuleOverride {
-			rule.GetMetadata().Override(standardRuleMetadataOverride, options.IsBaselineScan())
+		if rule != nil {
+			if isStandardRuleOverride {
+				rule.GetMetadata().Override(standardRuleMetadataOverride, options.IsBaselineScan())
+			}
+			rules = append(rules, &rule)
 		}
-		rules = append(rules, &rule)
 	}
 	return rules, nil
 }
@@ -55,7 +58,8 @@ func IsStandardRuleID(ruleId rules.RuleID) *bool {
 func createStandardRule(ruleId rules.RuleID) (rules.Rule, error) {
 	rule := ruleMapping[ruleId]
 	if rule == nil {
-		return nil, errorhandler.NewUserError(message.GetInvalidRuleIdError(string(ruleId)))
+		log.Println(message.GetInvalidRuleIdWarning(string(ruleId)))
+		return nil, nil
 	}
 	return rule, nil
 }
@@ -79,32 +83,25 @@ func GetRuleIdsToRun(configFile *config.Config, opts *options.Options) ([]rules.
 	}
 	// If user has specified specific rules, just return those
 	if opts.Rules != "" {
-		ruleIds := opts.SpecificRuleIds()
-		if err := validateRuleIds(ruleIds); err != nil {
-			return nil, nil, err
-		}
 		return opts.SpecificRuleIds(), nil, nil
 	}
 	if configFile != nil {
 		if opts.CICDScan {
 			return configFile.GetCICDRuleIds(), nil, nil
 		}
-		//Validate overrided rule Ids are valid
-		if err := validateRuleIds(configFile.GetOverridedRulesId()); err != nil {
-			return nil, nil, err
-		}
+		//Warn if overrided rule Ids are not valid
+		warnForInvalidRuleIds(configFile.GetOverridedRulesId())
 		return configFile.GetEnabledOverridedStandardRuleIds(GetAllRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
 	}
 	// If no config file, just include all the standard rules
 	return GetAllRuleIDs(), nil, nil
 }
 
-func validateRuleIds(ruleIds []rules.RuleID) error {
+func warnForInvalidRuleIds(ruleIds []rules.RuleID) {
 	for _, ruleId := range ruleIds {
 		_, isRuleIdExist := ruleMapping[ruleId]
 		if !isRuleIdExist {
-			return errorhandler.NewUserError(message.GetInvalidRuleIdError(string(ruleId)))
+			log.Println(message.GetInvalidRuleIdWarning(string(ruleId)))
 		}
 	}
-	return nil
 }

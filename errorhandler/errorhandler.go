@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"runtime"
+
+	"github.com/certinia/asist/message"
 )
 
 type ExitCode int
@@ -20,8 +22,8 @@ const (
  * ExitWithCode - method used to exit the current running process with given exit code
  * It will also print stack trace in case of internal error
  */
-func ExitWithCode(message string, exitCode ExitCode) {
-	log.Printf(message)
+func ExitWithCode(msg string, exitCode ExitCode) {
+	log.Print(message.SetLogType("Error", msg))
 
 	if exitCode == ExitCodeInternalError {
 		// Log the stack trace
