@@ -1,7 +1,7 @@
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
-import { getScannerPath, getDefaultScannerPath } from "../utils";
+import { getScannerPath, getDefaultScannerPath, removeAnsiEscapeCodes } from "../utils";
 
 jest.mock("os");
 
@@ -64,6 +64,34 @@ describe("client utils", () => {
 			const result = getScannerPath();
 			const expectedPath = path.join(basePath, `/asist_linux_amd64`);
 			expect(result).toBe(expectedPath);
+		});
+	});
+
+	describe("removeAnsiEscapeCodes", () => {
+		it("should return an empty string when input is empty", () => {
+			expect(removeAnsiEscapeCodes("")).toBe("");
+		});
+
+		it("should return the same string if there are no ANSI escape codes", () => {
+			const input = "Hello, world!";
+			expect(removeAnsiEscapeCodes(input)).toBe(input);
+		});
+
+		it("should remove simple ANSI codes", () => {
+			const input = "\u001b[31mHello\u001b[0m";
+			const expected = "Hello";
+			expect(removeAnsiEscapeCodes(input)).toBe(expected);
+		});
+
+		it("should handle multiple ANSI codes in the same string", () => {
+			const input = "\x1b[31mRed\x1b[0m and \x1b[32mGreen\x1b[0m";
+			const expected = "Red and Green";
+			expect(removeAnsiEscapeCodes(input)).toBe(expected);
+		});
+
+		it("should not throw on undefined or null", () => {
+			expect(removeAnsiEscapeCodes(undefined)).toBe("");
+			expect(removeAnsiEscapeCodes(null)).toBe("");
 		});
 	});
 });

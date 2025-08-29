@@ -16,7 +16,10 @@ jest.mock("child_process", () => ({
 
 jest.mock("../utils", () => ({
 	__esModule: true,
-	getScannerPath: jest.fn(() => "/mocked/path")
+	getScannerPath: jest.fn(() => "/mocked/path"),
+	removeAnsiEscapeCodes: jest.fn((str: string) => {
+		return "stdout data";
+	})
 }));
 
 jest.mock("../config", () => ({

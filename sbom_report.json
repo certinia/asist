@@ -1,10 +1,10 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.6",
-    "serialNumber": "urn:uuid:a7142a46-8f71-449b-870e-20278b0ad233",
+    "serialNumber": "urn:uuid:eb738fdb-97ea-4ed0-ab68-f17824b3f09f",
     "version": 1,
     "metadata": {
-        "timestamp": "2025-08-11T09:23:44Z",
+        "timestamp": "2025-08-29T10:18:16Z",
         "tools": {
             "components": [
                 {
@@ -51,37 +51,45 @@
                 {
                     "group": "",
                     "name": "asist",
-                    "version": "1.0.0",
+                    "version": "1.1.0",
                     "licenses": [
                         {
                             "expression": "SEE LICENSE IN LICENSE.txt"
                         }
                     ],
-                    "purl": "pkg:npm/asist@1.0.0",
+                    "purl": "pkg:npm/asist@1.1.0",
                     "type": "application",
-                    "bom-ref": "pkg:npm/asist@1.0.0"
+                    "bom-ref": "pkg:npm/asist@1.1.0"
                 },
                 {
                     "group": "",
                     "name": "apex-scanner-server",
-                    "version": "1.0.0",
-                    "purl": "pkg:npm/apex-scanner-server@1.0.0",
+                    "version": "1.1.0",
+                    "purl": "pkg:npm/apex-scanner-server@1.1.0",
                     "type": "application",
-                    "bom-ref": "pkg:npm/apex-scanner-server@1.0.0"
+                    "bom-ref": "pkg:npm/apex-scanner-server@1.1.0"
                 },
                 {
                     "group": "",
                     "name": "apex-scanner-client",
-                    "version": "1.0.0",
-                    "purl": "pkg:npm/apex-scanner-client@1.0.0",
+                    "version": "1.1.0",
+                    "purl": "pkg:npm/apex-scanner-client@1.1.0",
                     "type": "application",
-                    "bom-ref": "pkg:npm/apex-scanner-client@1.0.0"
+                    "bom-ref": "pkg:npm/apex-scanner-client@1.1.0"
                 },
                 {
                     "group": "",
                     "name": "github.com/certinia/asist",
                     "version": "",
                     "scope": "required",
+                    "licenses": [
+                        {
+                            "license": {
+                                "id": "BSD-3-Clause",
+                                "url": "https://pkg.go.dev/github.com/certinia/asist?tab=licenses"
+                            }
+                        }
+                    ],
                     "purl": "pkg:golang/github.com/certinia/asist",
                     "type": "application",
                     "bom-ref": "pkg:golang/github.com/certinia/asist",
@@ -36383,9 +36391,9 @@
                 "pkg:npm/eslint@9.33.0",
                 "pkg:npm/husky@9.1.7",
                 "pkg:npm/prettier@3.6.2",
-                "pkg:npm/asist@1.0.0",
-                "pkg:npm/apex-scanner-server@1.0.0",
-                "pkg:npm/apex-scanner-client@1.0.0",
+                "pkg:npm/asist@1.1.0",
+                "pkg:npm/apex-scanner-server@1.1.0",
+                "pkg:npm/apex-scanner-client@1.1.0",
                 "pkg:golang/github.com/certinia/asist"
             ]
         },
@@ -40016,7 +40024,7 @@
             ]
         },
         {
-            "ref": "pkg:npm/asist@1.0.0",
+            "ref": "pkg:npm/asist@1.1.0",
             "dependsOn": [
                 "pkg:npm/@types/jest@29.5.14",
                 "pkg:npm/@types/node@22.17.1",
@@ -40057,7 +40065,7 @@
             "dependsOn": []
         },
         {
-            "ref": "pkg:npm/apex-scanner-server@1.0.0",
+            "ref": "pkg:npm/apex-scanner-server@1.1.0",
             "dependsOn": [
                 "pkg:npm/vscode-languageserver-textdocument@1.0.12",
                 "pkg:npm/vscode-languageserver@9.0.1"
@@ -40082,7 +40090,7 @@
             "dependsOn": []
         },
         {
-            "ref": "pkg:npm/apex-scanner-client@1.0.0",
+            "ref": "pkg:npm/apex-scanner-client@1.1.0",
             "dependsOn": [
                 "pkg:npm/@types/vscode@1.102.0",
                 "pkg:npm/vscode-languageclient@9.0.1"
@@ -40179,8 +40187,8 @@
                     ]
                 }
             },
-            "timestamp": "2025-08-11T09:23:44Z",
-            "text": "This Software Bill-of-Materials (SBOM) document was created on Monday, August 11, 2025 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'certinia-asist' with version '0.0.0'. The application also has 4 child modules/components. There are 661 components. 2 package type(s) and 34 purl namespaces are described in the document under components."
+            "timestamp": "2025-08-29T10:18:16Z",
+            "text": "This Software Bill-of-Materials (SBOM) document was created on Friday, August 29, 2025 with cdxgen. The data was captured during the build lifecycle phase. The document describes an application named 'certinia-asist' with version '0.0.0'. The application also has 4 child modules/components. There are 661 components. 2 package type(s) and 34 purl namespaces are described in the document under components."
         }
     ]
 }
