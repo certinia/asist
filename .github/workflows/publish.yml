@@ -41,6 +41,8 @@ jobs:
     if: ${{ needs.check-tag.outputs.publish_binary == 'true' }}
     needs: check-tag
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       VERSION: ${{ needs.check-tag.outputs.tag_number }}
     steps:
