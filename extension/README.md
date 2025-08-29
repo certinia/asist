@@ -20,7 +20,7 @@ The extension is available on the [Visual Studio Code Marketplace](https://marke
 ASIST commands can be run in VSCode by pressing `Ctrl+Shift+P` and typing `ASIST` to get the list of available commands.
 Note that some commands will print results to the "Output" tab in VSCode (select `ASIST` in the channel dropdown).
 
-![ASIST Extension commands](https://github.com/certinia/asist/blob/main/extension/image-1.png)
+![ASIST Extension commands](https://raw.githubusercontent.com/certinia/asist/main/extension/image-1.png)
 
 - **Run on file:** Runs a scan on the current opened file.
 - **Run on workspace:** Runs a scan on the current project workspace.
@@ -55,3 +55,98 @@ This extension is shipped with prebuilt ASIST binaries, but if you need to speci
 # Developer guide
 
 Refer [DEVELOPING.md](https://github.com/certinia/asist/blob/main/DEVELOPING.md)
+
+# Contributors
+
+A big thank you to everyone who has contributed to ASIST!
+
+<table>
+  <tr>
+  <td align="center">
+      <a href="https://github.com/sdoylecertinia">
+        <img src="https://avatars.githubusercontent.com/sdoylecertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="sdoylecertinia"/><br />
+        <sub><b>Shaun</b></sub>
+      </a>
+  </td>
+  <td align="center">
+      <a href="https://github.com/pjaincertinia2025">
+        <img src="https://avatars.githubusercontent.com/pjaincertinia2025" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Pragati"/><br />
+        <sub><b>Pragati</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/gkumarcertinia">
+        <img src="https://avatars.githubusercontent.com/gkumarcertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Govardhan"/><br />
+        <sub><b>Govardhan</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/hdaulani">
+        <img src="https://avatars.githubusercontent.com/hdaulani" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Hemant"/><br />
+        <sub><b>Hemant</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/adawercertinia">
+        <img src="https://avatars.githubusercontent.com/adawercertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Abhishek"/><br />
+        <sub><b>Abhishek</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/dsinghcertinia">
+        <img src="https://avatars.githubusercontent.com/dsinghcertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Dheeraj"/><br />
+        <sub><b>Dheeraj</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/ssonicertinia">
+        <img src="https://avatars.githubusercontent.com/ssonicertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Shivam"/><br />
+        <sub><b>Shivam</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ajaincertinia">
+        <img src="https://avatars.githubusercontent.com/ajaincertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Anant"/><br />
+        <sub><b>Anant</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/sgulyanicertinia">
+        <img src="https://avatars.githubusercontent.com/sgulyanicertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Saijal"/><br />
+        <sub><b>Saijal</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+  <td align="center">
+      <a href="https://github.com/pswamicertinia">
+        <img src="https://avatars.githubusercontent.com/pswamicertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Pawan"/><br />
+        <sub><b>Pawan</b></sub>
+      </a>
+    </td>
+  <td align="center">
+      <a href="https://github.com/nbhatiacertinia">
+        <img src="https://avatars.githubusercontent.com/nbhatiacertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Nikhil"/><br />
+        <sub><b>Nikhil</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/manojkumar2019">
+        <img src="https://avatars.githubusercontent.com/manojkumar2019" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Manoj"/><br />
+        <sub><b>Manoj</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/B1naryVision">
+        <img src="https://avatars.githubusercontent.com/B1naryVision" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Hal"/><br />
+        <sub><b>Hal</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/mamorriscertinia">
+        <img src="https://avatars.githubusercontent.com/mamorriscertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Mathew"/><br />
+        <sub><b>Matthew</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>

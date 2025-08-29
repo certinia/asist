@@ -4,24 +4,23 @@ import (
 	"fmt"
 )
 
-func GetInvalidRuleIdError(ruleId string) string {
-	return fmt.Sprintf("Invalid rule ID: %s\n", ruleId)
+var TextColor = map[string]string{
+	"Error":   "\033[0;31m", // Red
+	"Info":    "\033[0;32m", // Green
+	"Warning": "\033[0;33m", // Yellow
+	"Debug":   "\033[0;34m", // Blue
+	"Reset":   "\033[0m",
+}
+
+func SetLogType(logType string, msg string) string {
+	return TextColor[logType] + logType + TextColor["Reset"] + ": " + msg
+}
+func GetInvalidRuleIdWarning(ruleId string) string {
+	return SetLogType("Warning", fmt.Sprintf("Invalid rule ID %s\n", ruleId))
 }
 
 func GetMissingFileOrFolderError() string {
 	return "Specify a file or folder path to scan\n"
-}
-
-func GetCreatingIgnoreListInstanceError(err error) string {
-	return fmt.Sprintf("Error while creating instance for ignore list %v", err)
-}
-
-func GetReadingCurrentWorkDirectoryError(pathErr error) string {
-	return fmt.Sprintf("Error while reading current work directory: %v", pathErr)
-}
-
-func GetIgnoreFilesWalkError(ignoreFilesWalkError error) string {
-	return fmt.Sprintf("Error while scanning for ignore files %v", ignoreFilesWalkError)
 }
 
 func GetPathFetchingError(err error) string {

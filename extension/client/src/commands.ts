@@ -1,7 +1,7 @@
 import { execFile } from "child_process";
 import { Disposable, LanguageClient } from "vscode-languageclient/node";
 import { type } from "os";
-import { getScannerPath } from "./utils";
+import { getScannerPath, removeAnsiEscapeCodes } from "./utils";
 import { join } from "path";
 import { getConfigFilePath, getConfigOption } from "./config";
 import { window, commands, workspace, ProgressLocation, Uri } from "vscode";
@@ -33,12 +33,14 @@ export function listRulesCommand(client: LanguageClient): Disposable {
 				? [OPTIONS.LIST_RULES]
 				: [OPTIONS.CONFIG, configFile, OPTIONS.LIST_RULES];
 		execFile(getScannerPath(), cmdOptions, function callback(error, stdout, stderr) {
-			const errorMessage = stderr ? stderr : error?.message;
+			if (error?.message) {
+				error.message = "Error: " + error?.message;
+			}
+			const errorMessage = removeAnsiEscapeCodes(stderr ? stderr : error?.message);
 			if (errorMessage) {
 				client.diagnostics.clear();
 				outputChannel.append(errorMessage);
 				window.showErrorMessage(errorMessage);
-				return;
 			}
 			outputChannel.append(stdout);
 		});
@@ -93,12 +95,14 @@ function displayOutputAndClearRequest(
 	stderr: string,
 	client: LanguageClient
 ) {
-	const errorMessage = stderr ? stderr : error?.message;
+	if (error?.message) {
+		error.message = "Error: " + error?.message;
+	}
+	const errorMessage = removeAnsiEscapeCodes(stderr ? stderr : error?.message);
 	if (errorMessage) {
 		client.diagnostics.clear();
 		outputChannel.append(errorMessage);
 		window.showErrorMessage(errorMessage);
-		return;
 	}
 	outputChannel.append(stdout);
 	client.diagnostics.clear();
