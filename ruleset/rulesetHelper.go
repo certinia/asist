@@ -83,20 +83,53 @@ func GetRuleIdsToRun(configFile *config.Config, opts *options.Options) ([]rules.
 	}
 	// If user has specified specific rules, just return those
 	if opts.Rules != "" {
-		return opts.SpecificRuleIds(), nil, nil
+		var standardRuleIds []rules.RuleID
+		var customRuleIds []rules.RuleID
+
+		for _, ruleID := range opts.SpecificRuleIds() {
+			if containsRuleID(configFile.GetCustomRuleIds(), ruleID) {
+				customRuleIds = append(customRuleIds, ruleID)
+			} else {
+				standardRuleIds = append(standardRuleIds, ruleID)
+			}
+		}
+
+		return standardRuleIds, customRuleIds, nil
 	}
 	if configFile != nil {
 		if opts.CICDScan {
-			return configFile.GetCICDRuleIds(), nil, nil
+			var standardRuleIds []rules.RuleID
+			var customRuleIds []rules.RuleID
+
+			for _, ruleID := range configFile.GetCICDRuleIds() {
+				if containsRuleID(configFile.GetCustomRuleIds(), ruleID) {
+					customRuleIds = append(customRuleIds, ruleID)
+				} else {
+					standardRuleIds = append(standardRuleIds, ruleID)
+				}
+			}
+
+			return standardRuleIds, customRuleIds, nil
 		}
-		//Warn if overrided rule Ids are not valid
+
+		// Warn if overridden rule IDs are not valid
 		warnForInvalidRuleIds(configFile.GetOverridedRulesId())
+
 		return configFile.GetEnabledOverridedStandardRuleIds(GetAllRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
 	}
+
 	// If no config file, just include all the standard rules
 	return GetAllRuleIDs(), nil, nil
 }
 
+func containsRuleID(ruleIDs []rules.RuleID, target rules.RuleID) bool {
+	for _, id := range ruleIDs {
+		if id == target {
+			return true
+		}
+	}
+	return false
+}
 func warnForInvalidRuleIds(ruleIds []rules.RuleID) {
 	for _, ruleId := range ruleIds {
 		_, isRuleIdExist := ruleMapping[ruleId]

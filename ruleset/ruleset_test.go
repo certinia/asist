@@ -127,6 +127,51 @@ func TestGetRuleIdsToRun_BaselineDisabledAndHasCICDRuleIds_returnCicdRuleIds(t *
 	opts.CICDScan = false
 }
 
+func TestGetRuleIdsToRun_BaselineDisabledAndHasCustomRulesInCICDRuleIds_returnCicdRuleIds(t *testing.T) {
+	//Given
+	opts := options.Options{
+		CICDScan: true,
+	}
+	enable := true
+
+	configFile := config.Config{
+		CICDRules: []string{
+			"ApexClassNoSharing",
+			"CustomRule1",
+		},
+		CustomRegexRules: map[string]config.CustomRegexRule{
+			"CustomRule1": {
+				Name:           "customName1",
+				Description:    "Please fix this",
+				Enabled:        &enable,
+				Severity:       "High",
+				RuleCategory:   "Security",
+				Pattern:        "Label",
+				IncludePattern: "\\.component$|\\.page$|\\.cls$|\\.email",
+				ExcludePattern: "",
+			},
+		},
+	}
+
+	expectedCicdStandardRuleIds := []rules.RuleID{"ApexClassNoSharing"}
+	expectedCicdCustomRuleIds := []rules.RuleID{"CustomRule1"}
+
+	//When
+	actualCicdStandardRuleIds, actualCicdCustomRuleIds, err := GetRuleIdsToRun(&configFile, &opts)
+
+	//Then
+	if !reflect.DeepEqual(actualCicdStandardRuleIds, expectedCicdStandardRuleIds) {
+		t.Errorf("%s Actual: %+v, Expected: %+v", "Standard CICD ruleIds are mismatched!", actualCicdStandardRuleIds, expectedCicdStandardRuleIds)
+	}
+	if !reflect.DeepEqual(actualCicdCustomRuleIds, expectedCicdCustomRuleIds) {
+		t.Errorf("%s Actual: %+v, Expected: %+v", "Custom CICD ruleIds are mismatched!", actualCicdCustomRuleIds, expectedCicdCustomRuleIds)
+	}
+	if err != nil {
+		t.Errorf("GetRuleIdsToRun method should not return error!")
+	}
+	opts.CICDScan = false
+}
+
 func TestGetRuleIdsToRun_BaselineDisabledAndConfigEnableAllStandardRulesEnabled_returnAllStandardRuleIds(t *testing.T) {
 	//Given
 	ENABLED_TRUE := true
@@ -224,6 +269,44 @@ func TestGetRuleIdsToRun_SpecificRuleHasInvalidRuleId_ReturnsInvalidRuleId(t *te
 	}
 	if !reflect.DeepEqual(len(actualCustomRuleIds), 0) {
 		t.Errorf("%s Actual: %+v, Expected: %+v", "Number of custom rule Ids should be 0!", len(actualCustomRuleIds), 0)
+	}
+	if err != nil {
+		t.Errorf("GetRuleIdsToRun method should not return error!")
+	}
+}
+
+func TestGetRuleIdsToRun_SpecificRuleHasCustomRuleId_ReturnsCustomRuleId(t *testing.T) {
+	//Given
+	opts := options.Options{
+		Rules: "CustomRule1",
+	}
+	enable := true
+	configFile := config.Config{
+		CustomRegexRules: map[string]config.CustomRegexRule{
+			"CustomRule1": {
+				Name:           "customName1",
+				Description:    "Please fix this",
+				Enabled:        &enable,
+				Severity:       "High",
+				RuleCategory:   "Security",
+				Pattern:        "Label",
+				IncludePattern: "\\.component$|\\.page$|\\.cls$|\\.email",
+				ExcludePattern: "",
+			},
+		},
+	}
+
+	expectedCustomRuleIds := []rules.RuleID{"CustomRule1"}
+
+	//When
+	actualStandardRuleIds, actualCustomRuleIds, err := GetRuleIdsToRun(&configFile, &opts)
+
+	//Then
+	if !reflect.DeepEqual(len(actualStandardRuleIds), 0) {
+		t.Errorf("%s Actual: %+v, Expected: %+v", "Number of standard rule Ids should be 0!", len(actualCustomRuleIds), 0)
+	}
+	if !reflect.DeepEqual(actualCustomRuleIds, expectedCustomRuleIds) {
+		t.Errorf("%s Actual: %+v, Expected: %+v", "Custom ruleIds are mismatched!", actualCustomRuleIds, expectedCustomRuleIds)
 	}
 	if err != nil {
 		t.Errorf("GetRuleIdsToRun method should not return error!")
