@@ -23,7 +23,7 @@ const (
  * It will also print stack trace in case of internal error
  */
 func ExitWithCode(msg string, exitCode ExitCode) {
-	log.Print(message.SetLogType("Error", msg))
+	log.Print(message.SetLogType(message.Error, msg))
 
 	if exitCode == ExitCodeInternalError {
 		// Log the stack trace

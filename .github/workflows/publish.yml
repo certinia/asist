@@ -84,11 +84,9 @@ jobs:
     steps:
       - name: Strip leading 'v' from tag
         run: |
-          TAG="${{ needs.check-tag.outputs.tag_number }}"
-          if [[ "$TAG" == v* ]]; then
-            VERSION="${TAG:1}" # remove first character i.e. v
-          else
-            VERSION="$TAG"
+          VERSION="${{ needs.check-tag.outputs.tag_number }}"
+          if [[ "$VERSION" == v* ]]; then
+            VERSION="${VERSION:1}" # remove first character i.e. v
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 

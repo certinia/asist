@@ -460,7 +460,7 @@ A big thank you to everyone who has contributed to ASIST!
     </td>
     <td align="center">
       <a href="https://github.com/mamorriscertinia">
-        <img src="https://avatars.githubusercontent.com/mamorriscertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Mathew"/><br />
+        <img src="https://avatars.githubusercontent.com/mamorriscertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Matthew"/><br />
         <sub><b>Matthew</b></sub>
       </a>
     </td>

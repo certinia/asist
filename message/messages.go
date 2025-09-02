@@ -4,6 +4,14 @@ import (
 	"fmt"
 )
 
+const (
+	Error   = "Error"
+	Info    = "Info"
+	Warning = "Warning"
+	Debug   = "Debug"
+	Reset   = "Reset"
+)
+
 var TextColor = map[string]string{
 	"Error":   "\033[0;31m", // Red
 	"Info":    "\033[0;32m", // Green
@@ -16,7 +24,7 @@ func SetLogType(logType string, msg string) string {
 	return TextColor[logType] + logType + TextColor["Reset"] + ": " + msg
 }
 func GetInvalidRuleIdWarning(ruleId string) string {
-	return SetLogType("Warning", fmt.Sprintf("Invalid rule ID %s\n", ruleId))
+	return SetLogType(Warning, fmt.Sprintf("Invalid rule ID %s\n", ruleId))
 }
 
 func GetMissingFileOrFolderError() string {
