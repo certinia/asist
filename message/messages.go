@@ -13,11 +13,11 @@ const (
 )
 
 var TextColor = map[string]string{
-	"Error":   "\033[0;31m", // Red
-	"Info":    "\033[0;32m", // Green
-	"Warning": "\033[0;33m", // Yellow
-	"Debug":   "\033[0;34m", // Blue
-	"Reset":   "\033[0m",
+	Error:   "\033[0;31m", // Red
+	Info:    "\033[0;32m", // Green
+	Warning: "\033[0;33m", // Yellow
+	Debug:   "\033[0;34m", // Blue
+	Reset:   "\033[0m",
 }
 
 func SetLogType(logType string, msg string) string {
