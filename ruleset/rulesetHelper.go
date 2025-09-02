@@ -77,47 +77,41 @@ func createCustomRule(ruleMetadata config.CustomRegexRule, ruleID rules.RuleID) 
  * - Otherwise, returns map[standardRuleIds] = true.
  */
 func GetRuleIdsToRun(configFile *config.Config, opts *options.Options) ([]rules.RuleID, []rules.RuleID, error) {
+	customRuleIdsFromConfig := configFile.GetCustomRuleIds()
 	//To Baseline scan on all ruleIds
 	if opts.BaselineScan {
-		return GetAllRuleIDs(), configFile.GetCustomRuleIds(), nil
+		return GetAllRuleIDs(), customRuleIdsFromConfig, nil
 	}
 	// If user has specified specific rules, just return those
 	if opts.Rules != "" {
 		var standardRuleIds []rules.RuleID
 		var customRuleIds []rules.RuleID
-
 		for _, ruleID := range opts.SpecificRuleIds() {
-			if containsRuleID(configFile.GetCustomRuleIds(), ruleID) {
+			if containsRuleID(customRuleIdsFromConfig, ruleID) {
 				customRuleIds = append(customRuleIds, ruleID)
 			} else {
 				standardRuleIds = append(standardRuleIds, ruleID)
 			}
 		}
-
 		return standardRuleIds, customRuleIds, nil
 	}
 	if configFile != nil {
 		if opts.CICDScan {
 			var standardRuleIds []rules.RuleID
 			var customRuleIds []rules.RuleID
-
 			for _, ruleID := range configFile.GetCICDRuleIds() {
-				if containsRuleID(configFile.GetCustomRuleIds(), ruleID) {
+				if containsRuleID(customRuleIdsFromConfig, ruleID) {
 					customRuleIds = append(customRuleIds, ruleID)
 				} else {
 					standardRuleIds = append(standardRuleIds, ruleID)
 				}
 			}
-
 			return standardRuleIds, customRuleIds, nil
 		}
-
 		// Warn if overridden rule IDs are not valid
 		warnForInvalidRuleIds(configFile.GetOverridedRulesId())
-
 		return configFile.GetEnabledOverridedStandardRuleIds(GetAllRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
 	}
-
 	// If no config file, just include all the standard rules
 	return GetAllRuleIDs(), nil, nil
 }
