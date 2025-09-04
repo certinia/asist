@@ -2,6 +2,7 @@ package ruleset
 
 import (
 	"log"
+	"slices"
 
 	"github.com/certinia/asist/config"
 	"github.com/certinia/asist/message"
@@ -12,7 +13,7 @@ import (
 
 var ruleIDs []rules.RuleID
 
-func GetAllRuleIDs() []rules.RuleID {
+func GetAllStdRuleIDs() []rules.RuleID {
 	if len(ruleIDs) == 0 {
 		for ruleID := range ruleMapping {
 			ruleIDs = append(ruleIDs, ruleID)
@@ -77,53 +78,43 @@ func createCustomRule(ruleMetadata config.CustomRegexRule, ruleID rules.RuleID) 
  * - Otherwise, returns map[standardRuleIds] = true.
  */
 func GetRuleIdsToRun(configFile *config.Config, opts *options.Options) ([]rules.RuleID, []rules.RuleID, error) {
-	customRuleIdsFromConfig := configFile.GetCustomRuleIds()
 	//To Baseline scan on all ruleIds
 	if opts.BaselineScan {
-		return GetAllRuleIDs(), customRuleIdsFromConfig, nil
+		return GetAllStdRuleIDs(), configFile.GetCustomRuleIds(), nil
 	}
 	// If user has specified specific rules, just return those
 	if opts.Rules != "" {
-		var standardRuleIds []rules.RuleID
-		var customRuleIds []rules.RuleID
-		for _, ruleID := range opts.SpecificRuleIds() {
-			if containsRuleID(customRuleIdsFromConfig, ruleID) {
-				customRuleIds = append(customRuleIds, ruleID)
-			} else {
-				standardRuleIds = append(standardRuleIds, ruleID)
-			}
-		}
+		standardRuleIds, customRuleIds := segregateRuleIds(configFile, opts.SpecificRuleIds())
 		return standardRuleIds, customRuleIds, nil
 	}
 	if configFile != nil {
 		if opts.CICDScan {
-			var standardRuleIds []rules.RuleID
-			var customRuleIds []rules.RuleID
-			for _, ruleID := range configFile.GetCICDRuleIds() {
-				if containsRuleID(customRuleIdsFromConfig, ruleID) {
-					customRuleIds = append(customRuleIds, ruleID)
-				} else {
-					standardRuleIds = append(standardRuleIds, ruleID)
-				}
-			}
+			standardRuleIds, customRuleIds := segregateRuleIds(configFile, configFile.GetCICDRuleIds())
 			return standardRuleIds, customRuleIds, nil
 		}
 		// Warn if overridden rule IDs are not valid
 		warnForInvalidRuleIds(configFile.GetOverridedRulesId())
-		return configFile.GetEnabledOverridedStandardRuleIds(GetAllRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
+		return configFile.GetEnabledOverridedStandardRuleIds(GetAllStdRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
 	}
 	// If no config file, just include all the standard rules
-	return GetAllRuleIDs(), nil, nil
+	return GetAllStdRuleIDs(), nil, nil
 }
-
-func containsRuleID(ruleIDs []rules.RuleID, target rules.RuleID) bool {
-	for _, id := range ruleIDs {
-		if id == target {
-			return true
+func segregateRuleIds(configFile *config.Config, ruleIds []rules.RuleID) ([]rules.RuleID, []rules.RuleID) {
+	customRuleIdsFromConfig := configFile.GetCustomRuleIds()
+	var standardRuleIds []rules.RuleID
+	var customRuleIds []rules.RuleID
+	for _, ruleID := range ruleIds {
+		if *IsStandardRuleID(ruleID) {
+			standardRuleIds = append(standardRuleIds, ruleID)
+		} else if slices.Contains(customRuleIdsFromConfig, ruleID) {
+			customRuleIds = append(customRuleIds, ruleID)
+		} else { // ruleID is invalid
+			log.Println(message.GetInvalidRuleIdWarning(string(ruleID)))
 		}
 	}
-	return false
+	return standardRuleIds, customRuleIds
 }
+
 func warnForInvalidRuleIds(ruleIds []rules.RuleID) {
 	for _, ruleId := range ruleIds {
 		_, isRuleIdExist := ruleMapping[ruleId]
