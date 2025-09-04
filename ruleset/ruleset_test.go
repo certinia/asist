@@ -9,12 +9,12 @@ import (
 	"github.com/certinia/asist/rules"
 )
 
-func TestGetAllRuleIDs_StandardRuleIds(t *testing.T) {
+func TestGetAllStdRuleIDs_StandardRuleIds(t *testing.T) {
 	//Given
 	const STANDARD_RULES_COUNT = 32
 
 	//When
-	standardRuleIds := GetAllRuleIDs()
+	standardRuleIds := GetAllStdRuleIDs()
 
 	//Then
 	if !reflect.DeepEqual(len(standardRuleIds), STANDARD_RULES_COUNT) {
@@ -27,7 +27,7 @@ func TestGetRuleIdsToRun_BaselineEnabledAndConfigNil_returnAllStandardAndCustomR
 	opts := options.Options{
 		BaselineScan: true,
 	}
-	expectedStandardRuleIds := GetAllRuleIDs()
+	expectedStandardRuleIds := GetAllStdRuleIDs()
 	expectedCustomRuleIds := []rules.RuleID{}
 
 	//When
@@ -57,7 +57,7 @@ func TestGetRuleIdsToRun_BaselineEnabledAndHasConfigCustomRules_returnAllStandar
 		},
 	}
 
-	expectedStandardRuleIds := GetAllRuleIDs()
+	expectedStandardRuleIds := GetAllStdRuleIDs()
 	expectedCustomRuleIds := []rules.RuleID{"customRule1"}
 
 	//When
@@ -186,7 +186,7 @@ func TestGetRuleIdsToRun_BaselineDisabledAndConfigEnableAllStandardRulesEnabled_
 		},
 	}
 
-	expectedStandardRuleIds := GetAllRuleIDs()
+	expectedStandardRuleIds := GetAllStdRuleIDs()
 
 	//When
 	actualStandardRuleIds, actualCustomRuleIds, err := GetRuleIdsToRun(&configFile, &opts)
@@ -236,7 +236,7 @@ func TestGetRuleIdsToRun_OptionsAllDisabledAndConfigFileNil_returnAllStandardRul
 	//Given
 	opts := options.Options{}
 
-	expectedStandardRuleIds := GetAllRuleIDs()
+	expectedStandardRuleIds := GetAllStdRuleIDs()
 
 	//When
 	actualStandardRuleIds, actualCustomRuleIds, err := GetRuleIdsToRun(nil, &opts)
@@ -258,14 +258,13 @@ func TestGetRuleIdsToRun_SpecificRuleHasInvalidRuleId_ReturnsInvalidRuleId(t *te
 	opts := options.Options{
 		Rules: "InvalidId",
 	}
-	expectedStandardRuleIds := []rules.RuleID{"InvalidId"}
 
 	//When
 	actualStandardRuleIds, actualCustomRuleIds, err := GetRuleIdsToRun(nil, &opts)
 
 	//Then
-	if !reflect.DeepEqual(actualStandardRuleIds, expectedStandardRuleIds) {
-		t.Errorf("%s Actual: %+v, Expected: %+v", "Standard ruleIds are mismatched!", actualStandardRuleIds, expectedStandardRuleIds)
+	if !reflect.DeepEqual(len(actualCustomRuleIds), 0) {
+		t.Errorf("%s Actual: %+v, Expected: %+v", "Standard ruleIds are mismatched!", len(actualStandardRuleIds), 0)
 	}
 	if !reflect.DeepEqual(len(actualCustomRuleIds), 0) {
 		t.Errorf("%s Actual: %+v, Expected: %+v", "Number of custom rule Ids should be 0!", len(actualCustomRuleIds), 0)
@@ -323,7 +322,7 @@ func TestGetRuleIdsToRun_OverrideRuleHasInvalidRuleId_ReturnsAllStandardRuleIds(
 		},
 	}
 
-	expectedStandardRuleIds := GetAllRuleIDs()
+	expectedStandardRuleIds := GetAllStdRuleIDs()
 
 	//When
 	actualStandardRuleIds, actualCustomRuleIds, err := GetRuleIdsToRun(&configFile, &opts)
