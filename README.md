@@ -453,17 +453,16 @@ A big thank you to everyone who has contributed to ASIST!
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/halbertsson_certemu">
-        <img src="https://avatars.githubusercontent.com/halbertsson_certemu" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Hal"/><br />
+      <a href="https://github.com/B1naryVision">
+        <img src="https://avatars.githubusercontent.com/B1naryVision" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Hal"/><br />
         <sub><b>Hal</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/mamorriscertinia">
-        <img src="https://avatars.githubusercontent.com/mamorriscertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Mathew"/><br />
+        <img src="https://avatars.githubusercontent.com/mamorriscertinia" width="80" style="border-radius: 50%; border: 1px solid #ccc; object-fit: cover;" alt="Matthew"/><br />
         <sub><b>Matthew</b></sub>
       </a>
     </td>
-    
   </tr>
 </table>

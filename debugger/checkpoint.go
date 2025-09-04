@@ -8,7 +8,8 @@ import (
 
 var DebugFunction = func(string) {}
 var refTime = time.Now()
-var logger = log.New(os.Stderr, "DEBUG: ", log.Ldate|log.Ltime)
+
+var logger = log.New(os.Stderr, "\033[0;34mDEBUG\033[0m: ", log.Ldate|log.Ltime)
 
 func setReferenceTime() {
 	refTime = time.Now()

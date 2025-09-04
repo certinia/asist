@@ -36,3 +36,13 @@ export function getScannerPath(): string {
 		return getDefaultScannerPath();
 	}
 }
+
+/*
+ * Strips ANSI escape codes from a string
+ */
+export function removeAnsiEscapeCodes(text: string): string {
+	if (!text) return "";
+	// Pattern to match ANSI escape sequences
+	const cleanText = text.replace(/\u001b\[\d+m/g, "").replace(/\x1b\[\d+;\d+m/g, "");
+	return cleanText;
+}
