@@ -7,8 +7,8 @@ on:
       - 'v*.*.*-vsce'
 
 permissions:
-  content: read
-  
+  contents: read
+
 jobs:
   check-tag:
     runs-on: ubuntu-latest
