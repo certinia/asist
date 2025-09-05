@@ -6,6 +6,8 @@ on:
       - 'v*.*.*'
       - 'v*.*.*-vsce'
 
+permissions:
+  contents: read
 
 jobs:
   check-tag:

@@ -171,7 +171,7 @@ func TestFindMatchesForFile_WhenQualifierIsValidAndHavingZeroResultsFound_Return
 	actualResult := FindOccurancesForFile(fileToScan, &metadata, true)
 
 	//Then
-	if !reflect.DeepEqual(len(actualResult), len(expectedResult)) {
+	if len(actualResult) != len(expectedResult) {
 		t.Errorf("%s Actual: %+v, Expected: %+v", "Occurrences data mismatched!", len(actualResult), len(expectedResult))
 	}
 }

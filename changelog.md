@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## [Unreleased]
+## \[1.1.0\] \- 2025-09-05
 
 ### Added
 
@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 * Converted the InvalidRuleId error into a warning; now the execution will continue even if an invalid rule ID is encountered.
+
+### Fixed
+
+* Fixed custom rules not getting picked in CI/CD and specific rule options.
 
 ## \[1.0.0\] \- 2025-08-11
 

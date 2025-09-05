@@ -1,12 +1,18 @@
 ## What's Changed
+
+## \[1.1.0\] \- 2025-09-05
+
 ### Added
 
-* **Core Functionality:**  
-  * Introduced the primary feature: `SAST tool to scan a file or an entire directory for security vulnerabilities, during and after development.`  
-  * Language support: `It is mainly built for Salesforce code, but compatible with any text file. It helps developers find potential security vulnerabilities in their code early in the development process.`  
-  * Command-line interface (CLI) for easy execution.  
-  * Configuration options via a YAML and JSON file.
-  * Introduced the official VS Code extension for ASIST, enabling direct IDE integration for SAST analysis.
-  * ASIST is also available as a Go package.
+* Added coloring for logs, errors, and warnings, like red `Error` text for errors and yellow `Warning` text for warnings.
+* Made compatibility changes in the extension to handle ANSI escape sequences coming from colored text outputs from the ASIST CLI.
+
+### Changed
+
+* Converted the InvalidRuleId error into a warning; now the execution will continue even if an invalid rule ID is encountered.
+
+### Fixed
+
+* Fixed custom rules not getting picked in CI/CD and specific rule options.
 
 ### [Full Changelog](https://github.com/certinia/asist/blob/main/changelog.md)
