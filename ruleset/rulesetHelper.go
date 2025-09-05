@@ -99,6 +99,7 @@ func GetRuleIdsToRun(configFile *config.Config, opts *options.Options) ([]rules.
 	// If no config file, just include all the standard rules
 	return GetAllStdRuleIDs(), nil, nil
 }
+
 func segregateRuleIds(configFile *config.Config, ruleIds []rules.RuleID) ([]rules.RuleID, []rules.RuleID) {
 	customRuleIdsFromConfig := configFile.GetCustomRuleIds()
 	var standardRuleIds []rules.RuleID
