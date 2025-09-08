@@ -265,7 +265,7 @@ func TestGetRuleIdsToRun_SpecificRuleHasInvalidRuleId_DropsInvalidRuleId(t *test
 
 	//Then
 	if len(actualStandardRuleIds) != 0 {
-		t.Errorf("%s Actual: %+v, Expected: %+v", "Standard ruleIds are mismatched!", len(actualStandardRuleIds), 0)
+		t.Errorf("%s Actual: %+v, Expected: %+v", "Number of standard rule Ids should be 0!", len(actualStandardRuleIds), 0)
 	}
 	if len(actualCustomRuleIds) != 0 {
 		t.Errorf("%s Actual: %+v, Expected: %+v", "Number of custom rule Ids should be 0!", len(actualCustomRuleIds), 0)
