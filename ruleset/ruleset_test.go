@@ -133,11 +133,13 @@ func TestGetRuleIdsToRun_BaselineDisabledAndHasCustomRulesInCICDRuleIds_returnCi
 		CICDScan: true,
 	}
 	enable := true
+	disable := false
 
 	configFile := config.Config{
 		CICDRules: []string{
 			"ApexClassNoSharing",
 			"CustomRule1",
+			"CustomRule2",
 			"InvalidRuleId",
 		},
 		CustomRegexRules: map[string]config.CustomRegexRule{
@@ -151,11 +153,21 @@ func TestGetRuleIdsToRun_BaselineDisabledAndHasCustomRulesInCICDRuleIds_returnCi
 				IncludePattern: "\\.component$|\\.page$|\\.cls$|\\.email",
 				ExcludePattern: "",
 			},
+			"CustomRule2": {
+				Name:           "customName2",
+				Description:    "Please fix this custom rule",
+				Enabled:        &disable,
+				Severity:       "Low",
+				RuleCategory:   "Performance",
+				Pattern:        "System\\.debug",
+				IncludePattern: "\\.cls$",
+				ExcludePattern: "",
+			},
 		},
 	}
 
 	expectedCicdStandardRuleIds := []rules.RuleID{"ApexClassNoSharing"}
-	expectedCicdCustomRuleIds := []rules.RuleID{"CustomRule1"}
+	expectedCicdCustomRuleIds := []rules.RuleID{"CustomRule1", "CustomRule2"}
 
 	//When
 	actualCicdStandardRuleIds, actualCicdCustomRuleIds, err := GetRuleIdsToRun(&configFile, &opts)

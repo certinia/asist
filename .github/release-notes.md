@@ -4,8 +4,7 @@
 
 ### Added
 
-* Added coloring for logs, errors, and warnings, like red `Error` text for errors and yellow `Warning` text for warnings.
-* Made compatibility changes in the extension to handle ANSI escape sequences coming from colored text outputs from the ASIST CLI.
+* Added coloring for logs, errors, and warnings, like red `Error` text for errors and yellow `Warning` text for warnings for ASIST CLI.
 
 ### Changed
 
