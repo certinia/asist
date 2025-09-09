@@ -2,6 +2,7 @@ package ruleset
 
 import (
 	"log"
+	"slices"
 
 	"github.com/certinia/asist/config"
 	"github.com/certinia/asist/message"
@@ -12,7 +13,7 @@ import (
 
 var ruleIDs []rules.RuleID
 
-func GetAllRuleIDs() []rules.RuleID {
+func GetAllStdRuleIDs() []rules.RuleID {
 	if len(ruleIDs) == 0 {
 		for ruleID := range ruleMapping {
 			ruleIDs = append(ruleIDs, ruleID)
@@ -79,22 +80,40 @@ func createCustomRule(ruleMetadata config.CustomRegexRule, ruleID rules.RuleID) 
 func GetRuleIdsToRun(configFile *config.Config, opts *options.Options) ([]rules.RuleID, []rules.RuleID, error) {
 	//To Baseline scan on all ruleIds
 	if opts.BaselineScan {
-		return GetAllRuleIDs(), configFile.GetCustomRuleIds(), nil
+		return GetAllStdRuleIDs(), configFile.GetCustomRuleIds(), nil
 	}
 	// If user has specified specific rules, just return those
 	if opts.Rules != "" {
-		return opts.SpecificRuleIds(), nil, nil
+		standardRuleIds, customRuleIds := segregateRuleIds(configFile, opts.SpecificRuleIds())
+		return standardRuleIds, customRuleIds, nil
 	}
 	if configFile != nil {
 		if opts.CICDScan {
-			return configFile.GetCICDRuleIds(), nil, nil
+			standardRuleIds, customRuleIds := segregateRuleIds(configFile, configFile.GetCICDRuleIds())
+			return standardRuleIds, customRuleIds, nil
 		}
-		//Warn if overrided rule Ids are not valid
+		// Warn if overridden rule IDs are not valid
 		warnForInvalidRuleIds(configFile.GetOverridedRulesId())
-		return configFile.GetEnabledOverridedStandardRuleIds(GetAllRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
+		return configFile.GetEnabledOverridedStandardRuleIds(GetAllStdRuleIDs()), configFile.GetEnabledCustomRuleIds(), nil
 	}
 	// If no config file, just include all the standard rules
-	return GetAllRuleIDs(), nil, nil
+	return GetAllStdRuleIDs(), nil, nil
+}
+
+func segregateRuleIds(configFile *config.Config, ruleIds []rules.RuleID) ([]rules.RuleID, []rules.RuleID) {
+	customRuleIdsFromConfig := configFile.GetCustomRuleIds()
+	var standardRuleIds []rules.RuleID
+	var customRuleIds []rules.RuleID
+	for _, ruleID := range ruleIds {
+		if *IsStandardRuleID(ruleID) {
+			standardRuleIds = append(standardRuleIds, ruleID)
+		} else if slices.Contains(customRuleIdsFromConfig, ruleID) {
+			customRuleIds = append(customRuleIds, ruleID)
+		} else { // ruleID is invalid
+			log.Println(message.GetInvalidRuleIdWarning(string(ruleID)))
+		}
+	}
+	return standardRuleIds, customRuleIds
 }
 
 func warnForInvalidRuleIds(ruleIds []rules.RuleID) {
