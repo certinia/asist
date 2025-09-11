@@ -1,5 +1,5 @@
 <div align="center">
-<img height="200px" src="images/logo.svg"></img>
+  <img height="200px" src="images/logo.svg"/>
 </div>
 
 # ASIST (Automated Security Issue Scanning Tool)
