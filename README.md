@@ -40,7 +40,7 @@ Originally built for internal use at Certinia to support Security Reviews, we ha
 
 ### As a Go package
 
-1. Run `go install github.com/certinia/asist`
+1. Run `go install github.com/certinia/asist@latest`
 
 ### Installing the VSCode extension
 
