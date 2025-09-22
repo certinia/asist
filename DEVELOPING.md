@@ -116,6 +116,9 @@ Setting is already registered when running in debug mode. This is because your r
 # 🚀 Making a release (For the maintainers)
 
 - Ensure that the latest SBOM report is available at the root of repository before releasing.
-- A release will be made by the ASIST maintainers for a specific version. To make the release, the maintainer will create and push a git tag with a particular version on the repo.
+- A release will be made by the ASIST maintainers for a specific version. We are releasing ASIST Binary and Extension separately using two different type of tags i.e. `v*.*.*` for Binary and `vsix-v*.*.*` for Extension. There are certain scenarios which need to be considered while publishing:
+   - If code changes are done only in binary release is required, push binary tag format only.
+   - If code changes are done only in extension, push extension tag format only.
+   - If code changes done in both binary and extension, then first make sure to release binary and then extension. So that, extension contains the latest binaries.
 - Verify that the publish build is executed successfully.
 - Once the version has been successfully released, it needs to be updated in the .env file (this file is used by Makefile for providing versions to local builds).
