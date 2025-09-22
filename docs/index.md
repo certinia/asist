@@ -39,7 +39,7 @@ Originally built for internal use at Certinia to support Security Reviews, we ha
 
 ### As a Go package
 
-1. Run `go install github.com/certinia/asist`
+1. Run `go install github.com/certinia/asist@latest`
 
 ### As VSCode extension
 
@@ -56,7 +56,7 @@ Alternatively:
 - To just build the binary for your OS and architecture: `make`
 - To cross-compile: `GOOS=windows GOARCH=amd64 go build -o asist.exe .`
 - To build binaries for the most common platforms, run: `make build-binaries`
- 
+
 
 ## 🕹️ Usage
 
@@ -198,7 +198,7 @@ Configuration files can also be explicitly specified using the `-c` argument (no
 
 Within the config file, you can:
 
-* Enable/disable all the standard rules  
+* Enable/disable all the standard rules
 * Override certain properties of standard rules
 * Exclude files or directories for all rules
 * Exclude files or directories for specific rules
@@ -280,7 +280,7 @@ asist -j .
 In this mode, by default, all enabled runs will be run if `cicdrules` property is not defined, but if the `cicdrules` config property contains any rule IDs, only these will be run. And, if `cicdrules` is defined but is blank (no rule is mentioned under this property), then no rules will be executed.
 
 ```yaml
-cicdrules: 
+cicdrules:
   - "XSSLabel"
   - "XSSMergeField"
 ```
