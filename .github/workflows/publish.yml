@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*.*.*'
-      - 'v*.*.*-vsix'
+      - 'vsix-v*.*.*'
 
 permissions:
   contents: read
@@ -28,7 +28,7 @@ jobs:
             echo "Binary release"
             echo "publish_binary=true" >> $GITHUB_OUTPUT
             echo "publish_extension=false" >> $GITHUB_OUTPUT
-          elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-vsix$ ]]; then
+          elif [[ "$TAG" =~ ^vsix-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Extension release"
             echo "publish_binary=false" >> $GITHUB_OUTPUT
             echo "publish_extension=true" >> $GITHUB_OUTPUT
@@ -78,12 +78,11 @@ jobs:
     needs: [check-tag]
     runs-on: ubuntu-latest
     steps:
-      - name: Strip leading 'v' from tag
+      - name: Strip leading 'vsix-v' prefix from tag
         run: |
           VERSION="${{ needs.check-tag.outputs.tag_number }}"
-          if [[ "$VERSION" == v* ]]; then
-            VERSION="${VERSION#v}" # Remove leading 'v'
-            VERSION="${VERSION%-vsix}" # Remove trailing 'vsix'
+          if [[ "$VERSION" == vsix-v* ]]; then
+            VERSION="${VERSION#vsix-v}" # Remove leading 'vsix-v'
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
