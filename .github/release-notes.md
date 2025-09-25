@@ -1,17 +1,9 @@
 ## What's Changed
 
-## \[1.1.0\] \- 2025-09-23
-
-### Added
-
-* Added coloring for logs, errors, and warnings, like red `Error` text for errors and yellow `Warning` text for warnings for ASIST CLI.
-
-### Changed
-
-* Converted the InvalidRuleId error into a warning; now the execution will continue even if an invalid rule ID is encountered.
+## \[1.1.1\] \- 2025-09-25
 
 ### Fixed
 
-* Fixed custom rules not getting picked in CI/CD and specific rule options.
+* Fixed `-V` flag not able to display version for go package.
 
 ### [Full Changelog](https://github.com/certinia/asist/blob/main/changelog.md)

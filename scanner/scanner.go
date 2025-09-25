@@ -18,7 +18,7 @@ import (
 	"github.com/certinia/asist/ruleset"
 )
 
-var Version = "0.0.0"
+var Version = ""
 
 /**
 *	LoadResources - Method will load and setup the required resources for scan
