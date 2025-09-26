@@ -3,7 +3,7 @@
   "displayName": "ASIST",
   "description": "ASIST (Automated Security Issue Scanning Tool) is a vulnerability scanner for Force.com projects",
   "license": "SEE LICENSE IN LICENSE.txt",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "icon": "logo.png",
   "publisher": "FinancialForce",
   "author": "",
