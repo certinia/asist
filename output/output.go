@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"runtime/debug"
 	"strings"
 	"time"
 
@@ -153,6 +154,18 @@ func DisplayVersion(version string) {
 		return
 	}
 
-	fmt.Printf("%s\n", version)
+	if version != "" {
+		fmt.Printf("%s\n", version)
+	} else {
+		buildInfo, ok := debug.ReadBuildInfo()
+		if !ok {
+			fmt.Println("Version information not available.")
+		}
+		if buildInfo.Main.Version != "" {
+			fmt.Printf("%s\n", buildInfo.Main.Version)
+		} else {
+			fmt.Println("unknown")
+		}
+	}
 	os.Exit(int(errorhandler.ExitCodeSuccess))
 }

@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## \[1.1.1\] \- 2025-09-26
+
+### Fixed
+
+* Fixed `-V` flag not able to display version for go package.
+
 ## \[1.1.0\] \- 2025-09-23
 
 ### Added
