@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## \[Unreleased\]
+
+### Fixed
+
+* Enhanced the regex to be case-insensitive and to support `.` in repository names, enabling correct extraction of the repository name from SSH URLs in baseline scan.
+
 ## \[1.1.1\] \- 2025-09-26
 
 ### Fixed
