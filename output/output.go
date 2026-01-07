@@ -6,7 +6,7 @@ import (
 	"os"
 	"regexp"
 	"runtime/debug"
-	"strings"
+
 	"time"
 
 	"github.com/certinia/asist/config"
@@ -64,17 +64,14 @@ func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
 }
 
 /**
- * extractRepoNameFromURL - method used to extract repoFolder/repoName from a sshUrl of repository
+ * extractRepoNameFromURL - method used to extract repoName from a sshUrl of repository
  */
 func extractRepoNameFromURL(url string) string {
 	if url != "" {
-		findRepoNameRegexp := regexp.MustCompile(`(?i)[a-z0-9-_.]+/[a-z0-9-_.]+\.git$`)
+		findRepoNameRegexp := regexp.MustCompile(`(?i)([a-z0-9-_.]+)\.git$`)
 		match := findRepoNameRegexp.FindStringSubmatch(url)
-		if len(match) > 0 {
-			parts := strings.Split(match[0], ".git")
-			if len(parts) > 1 {
-				return parts[0]
-			}
+		if len(match) > 1 {
+			return match[1]
 		}
 	}
 	return ""
