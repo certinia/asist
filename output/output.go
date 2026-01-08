@@ -68,8 +68,9 @@ func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
  */
 func extractRepoNameFromURL(url string) string {
 	if url != "" {
-		findRepoNameRegexp := regexp.MustCompile(`(?i)([a-z0-9-_.]+)\.git$`)
+		findRepoNameRegexp := regexp.MustCompile(`(?i)/([a-z0-9-_.]+)\.git$`)
 		match := findRepoNameRegexp.FindStringSubmatch(url)
+		fmt.Println("match:", match)
 		if len(match) > 1 {
 			return match[1]
 		}
