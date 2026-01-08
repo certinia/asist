@@ -34,13 +34,13 @@ func TestCreateBaselineOutput(t *testing.T) {
 	baselineOutputContent := finding.BaselineOutputContent{FindingID: "431d4935962ceb80271200", IsCustom: false, IsFalsePositive: false, Id: "ExposedMessageChannel", Severity: "High", RuleCategory: "Security"}
 	expectedBaselineOutput := []finding.BaselineOutput{
 		{
-			RepositoryName: "test/test",
+			RepositoryName: "test",
 			RepositoryURL:  sshUrl,
 			RecordType:     "Finding",
 			Content:        baselineOutputContent,
 		},
 		{
-			RepositoryName: "test/test",
+			RepositoryName: "test",
 			RepositoryURL:  sshUrl,
 			RecordType:     "Config",
 			Content:        config.GetConfigInstance(),
