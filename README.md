@@ -3,10 +3,11 @@
 </div>
 
 # ASIST (Automated Security Issue Scanning Tool)
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/certinia/asist.svg)](https://pkg.go.dev/github.com/certinia/asist)
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue)](https://opensource.org/license/bsd-3-clause)
 
-ASIST is a regex-based, blazing-fast Static Application Security Testing (SAST) tool for securing Salesforce apps at developer speed. 
+ASIST is a regex-based, blazing-fast Static Application Security Testing (SAST) tool for securing Salesforce apps at developer speed.
 
 Originally built for internal use at Certinia to support Security Reviews, we have now decided to release it to the community 🌍
 
@@ -25,7 +26,7 @@ Originally built for internal use at Certinia to support Security Reviews, we ha
 
 ## ▶️ VSCode extension demo
 
-![ASIST scan via Extension](images/scan-using-extension.gif) 
+![ASIST scan via Extension](images/scan-using-extension.gif)
 
 ## ▶️ CLI demo
 
@@ -59,7 +60,6 @@ Alternatively:
 - To just build the binary for your OS and architecture: `make`
 - To cross-compile: `GOOS=windows GOARCH=amd64 go build -o asist.exe .`
 - To build binaries for the most common platforms, run: `make build-binaries`
- 
 
 ## 🕹️ Usage
 
@@ -201,12 +201,12 @@ Configuration files can also be explicitly specified using the `-c` argument (no
 
 Within the config file, you can:
 
-* Enable/disable all the standard rules  
-* Override certain properties of standard rules
-* Exclude files or directories for all rules
-* Exclude files or directories for specific rules
-* Add custom regex rules
-* Define rules to be run in CI/CD mode
+- Enable/disable all the standard rules  
+- Override certain properties of standard rules
+- Exclude files or directories for all rules
+- Exclude files or directories for specific rules
+- Add custom regex rules
+- Define rules to be run in CI/CD mode
 
 See our [example config file](.asist.example.yaml) for a walkthrough of all config options.
 
@@ -215,6 +215,7 @@ See our [example config file](.asist.example.yaml) for a walkthrough of all conf
 Users can override certain properties of standard rules according to their needs, allowing them to customize the behavior of specific rules by:
 
 - Disabling rules entirely: `enabled`
+- Limiting the number of allowed rule violations: [`maxissues`](#rule-max-issues)
 - Tweaking rule severity: `severity`
 - Tweaking what files should be scanned: `includepattern`
 - Tweaking what files should not be scanned: `excludepattern`
@@ -237,7 +238,6 @@ customregexrules:
 ```
 
 You can test this specific rule like this:
-
 
 ```shell
 asist -c .asist.yaml -r doNotDebug <file>
@@ -292,11 +292,33 @@ In this mode, by default, all enabled runs will be run if `cicdrules` property i
 cicdrules: 
   - "XSSLabel"
   - "XSSMergeField"
+  - "XSSDomHtml"
 ```
 
 This allows developers to add a subset of the overall ruleset to ASIST to their CI/CD pipelines, and gradually add more rules to CI/CD as they start clearing out findings for other rules. This prevents any issues for rules defined in `cicdrules` from creeping back into the codebase.
 
-### 📊 Baseline scans
+## Rule Max Issues
+
+When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `maxissues` property in [`ruleoverrides`](#-customizing-standard-rules) allows you to set maximum allowed issue counts for specific rules.
+
+**By default, rules have a limit of 0 issues.** When a rule exceeds its `maxissues` threshold, ASIST will exit with an error code (see [Exit Codes](#-exit-codes)). You only need to set `maxissues` if you want to allow existing issues while preventing them from growing.
+
+```yaml
+ruleoverrides:
+  XSSLabel:
+    maxissues: 150  # Allow up to 150 XSSTooltip issues (grandfather existing issues)
+  XSSMergeField:
+    maxissues: 0    # Explicitly set to 0 (same as default - no issues allowed)
+  # XSSDomHtml has no maxissues set, defaults to 0 (no issues allowed)
+```
+
+This feature allows you to:
+
+- Gradually introduce stricter security requirements by lowering maxissues over time
+- Prevent technical debt from growing while you address existing issues  
+- Start enforcing security on a codebase with 150 existing issues, then reduce to 100, 50, and eventually 0
+
+## 📊 Baseline scans
 
 This mode is intended for SecOps teams to create benchmarks across multiple projects and measure the adoption of ASIST.
 
@@ -314,32 +336,32 @@ This command will output a JSON like this (when formatted):
 
 ```json
 [
-	{
-		"RepositoryName": "certinia/asist",
-		"RepositoryURL": "git@github.com:certinia/asist.git",
-		"RecordType": "Finding",
-		"Content": {
-			"FindingID": "b17fe249915712219aca7e",
-			"IsCustom": false,
-			"IsFalsePositive": true,
-			"RuleID": "LwcNonStandardPositioning",
-			"Severity": "Medium",
-			"RuleCategory": "Security"
-		}
-	},
-	{
-		"RepositoryName": "certinia/asist",
-		"RepositoryURL": "git@github.com:certinia/asist.git",
-		"RecordType": "Finding",
-		"Content": {
-			"FindingID": "3a2861bee641864816b86d",
-			"IsCustom": false,
-			"IsFalsePositive": true,
-			"RuleID": "LwcNonStandardPositioning",
-			"Severity": "Medium",
-			"RuleCategory": "Security"
-		}
-	}
+ {
+  "RepositoryName": "certinia/asist",
+  "RepositoryURL": "git@github.com:certinia/asist.git",
+  "RecordType": "Finding",
+  "Content": {
+   "FindingID": "b17fe249915712219aca7e",
+   "IsCustom": false,
+   "IsFalsePositive": true,
+   "RuleID": "LwcNonStandardPositioning",
+   "Severity": "Medium",
+   "RuleCategory": "Security"
+  }
+ },
+ {
+  "RepositoryName": "certinia/asist",
+  "RepositoryURL": "git@github.com:certinia/asist.git",
+  "RecordType": "Finding",
+  "Content": {
+   "FindingID": "3a2861bee641864816b86d",
+   "IsCustom": false,
+   "IsFalsePositive": true,
+   "RuleID": "LwcNonStandardPositioning",
+   "Severity": "Medium",
+   "RuleCategory": "Security"
+  }
+ }
 ]
 ```
 
@@ -350,8 +372,7 @@ A few differences can be observed compared to regular scans:
 - Each issue is assigned a `FindingID`, which is effectively a hash that uniquely identifies the finding based on the rule, the finding location, and if it's a false positive or not.
 - A few more properties are added, such as if the rule is custom, or if the finding is marked as false positive or not.
 
-
-### 🫣 .gitignore and .forceignore files
+## 🫣 .gitignore and .forceignore files
 
 By default, ASIST will ignore files and folders defined inside .gitignore and .forceignore. If you don't want ASIST to respect .gitignore and .forceignore, you can use the following properties in the config file:
 
@@ -366,7 +387,6 @@ By default, ASIST will ignore files and folders defined inside .gitignore and .f
 | 1         | ASIST executed successfully with findings                |
 | 3         | ASIST failed due to internal error (file a bug report!)  |
 | 4         | ASIST failed due to user error (review input and config) |
-
 
 ## 🏗️ [CONTRIBUTING](CONTRIBUTING.md)
 

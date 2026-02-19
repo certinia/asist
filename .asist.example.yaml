@@ -19,16 +19,20 @@ dontforceignore: false
 cicdrules: 
   - "XSSLabel"
   - "XSSMergeField"
+  - "XSSTooltip"
 
 # `ruleoverrides` property is used to override some properties of standard rules. The following are defined below:
 # severity: Low|Medium|High|Critical
 # includepattern: specify files or folders to be included from scans.
 # excludepattern: specify files or folders to be excluded from scans.
 # `enabled` property is used to enable/disable a particular rule. It will override `enableAllStandardRules` property.
+# `maxissues` property sets maximum allowed issue count (default is 0 if not specified - no issues allowed).
+#   This is useful when introducing ASIST to a codebase with existing issues - you can gradually reduce maxissues.
 ruleoverrides:
   XSSTooltip: # Rule Id to be overriden
     severity: Medium
     enabled: true
+    maxissues: 50  # Allow up to 50 XSSTooltip issues (grandfathered existing issues)
   XSSLabel:
     includepattern: "\\.page$|\\.component$"
     enabled: true
