@@ -61,6 +61,7 @@ type RuleMetadataOverride struct {
 	ExcludePattern string
 	IncludePattern string
 	Enabled        *bool
+	MaxIssues      *int
 }
 
 /**

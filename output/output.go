@@ -41,6 +41,39 @@ func ListRules(ruleInstances []*rules.Rule) {
 }
 
 /**
+ * Checks if any rule exceeds its configured maxissues.
+ * Default maxissues is 0 (no issues allowed) if not explicitly set.
+ * Returns true if any threshold is violated, false otherwise.
+ */
+func checkThresholdViolations(finalResult *finding.Output, configFile *config.Config) bool {
+	findingsPerRule := make(map[rules.RuleID]int)
+
+	for _, finding := range finalResult.Results {
+		findingsPerRule[finding.ID]++
+	}
+
+	// Check each rule that has findings
+	hasViolation := false
+
+	for ruleId, count := range findingsPerRule {
+		maxIssuesAllowed := configFile.GetRuleMaxIssues(ruleId)
+
+		if count > maxIssuesAllowed {
+			fmt.Fprintf(
+				os.Stderr,
+				"Threshold violation: Rule %s has %d issues (max allowed: %d)\n",
+				ruleId,
+				count,
+				maxIssuesAllowed,
+			)
+			hasViolation = true
+		}
+	}
+
+	return hasViolation
+}
+
+/**
  * DisplayOutput - method used to display the output of scans by type
  */
 func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
@@ -56,8 +89,9 @@ func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
 		finalResult.Count = len(finalResult.Results)
 		displayOutput(finalResult)
 
-		//Returns exit 1 in case of the CICD rules defined in the configFile
-		if finalResult.Count > 0 && options.IsCICDScan() {
+		configFile := config.GetConfigInstance()
+		
+		if options.IsCICDScan() && checkThresholdViolations(finalResult, configFile) {
 			os.Exit(int(errorhandler.ExitCodeOccurrence))
 		}
 	}
