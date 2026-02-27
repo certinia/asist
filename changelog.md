@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## \[Unreleased\]
 
+### Added
+
+* Added `maxissues` property to `ruleoverrides` config, allowing a maximum number of issues to be permitted per rule in CI/CD mode. This enables gradual remediation of existing issues by setting a threshold that can be reduced over time. Exceeding the threshold exits with a non-zero code and prints a violation summary to stderr.
+
 ### Fixed
 
 * Enhanced the regex to be case-insensitive and to support `.` in repository names, enabling correct extraction of the repository name from SSH URLs in baseline scan.
