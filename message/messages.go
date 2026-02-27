@@ -62,3 +62,15 @@ func GetFileUnmarshalingError(err error) string {
 func GetMarshalIndentError(err error) string {
 	return fmt.Sprintf("%v", err)
 }
+
+func GetThresholdViolationHeader() string {
+	return "Threshold violations:"
+}
+
+func GetThresholdViolation(ruleId string, count int, max int) string {
+	return fmt.Sprintf("  Rule %s has %d issues (max allowed: %d)", ruleId, count, max)
+}
+
+func GetThresholdViolationSummary(count int) string {
+	return fmt.Sprintf("%d rule(s) exceeded their maxissues threshold.", count)
+}

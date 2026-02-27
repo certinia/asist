@@ -3,9 +3,11 @@ package output
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"runtime/debug"
+	"sort"
 
 	"time"
 
@@ -41,36 +43,47 @@ func ListRules(ruleInstances []*rules.Rule) {
 }
 
 /**
- * Checks if any rule exceeds its configured maxissues.
- * Default maxissues is 0 (no issues allowed) if not explicitly set.
+ * CheckThresholdViolations checks if any rule exceeds its configured maxissues.
+ * Default maxissues is 0 (no issues allowed).
  * Returns true if any threshold is violated, false otherwise.
  */
-func checkThresholdViolations(finalResult *finding.Output, configFile *config.Config) bool {
+func CheckThresholdViolations(w io.Writer, finalResult *finding.Output, configFile *config.Config) bool {
 	findingsPerRule := make(map[rules.RuleID]int)
 
 	for _, finding := range finalResult.Results {
 		findingsPerRule[finding.ID]++
 	}
 
-	// Check each rule that has findings
-	hasViolation := false
+	// Sort rule IDs for deterministic output
+	sortedRuleIds := make([]rules.RuleID, 0, len(findingsPerRule))
+	for ruleId := range findingsPerRule {
+		sortedRuleIds = append(sortedRuleIds, ruleId)
+	}
+	sort.Slice(sortedRuleIds, func(i, j int) bool {
+		return string(sortedRuleIds[i]) < string(sortedRuleIds[j])
+	})
 
-	for ruleId, count := range findingsPerRule {
+	// Check each rule that has findings
+	violationCount := 0
+
+	for _, ruleId := range sortedRuleIds {
+		count := findingsPerRule[ruleId]
 		maxIssuesAllowed := configFile.GetRuleMaxIssues(ruleId)
 
 		if count > maxIssuesAllowed {
-			fmt.Fprintf(
-				os.Stderr,
-				"Threshold violation: Rule %s has %d issues (max allowed: %d)\n",
-				ruleId,
-				count,
-				maxIssuesAllowed,
-			)
-			hasViolation = true
+			if violationCount == 0 {
+				fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationHeader())
+			}
+			fmt.Fprintf(w, "%s\n", message.GetThresholdViolation(string(ruleId), count, maxIssuesAllowed))
+			violationCount++
 		}
 	}
 
-	return hasViolation
+	if violationCount > 0 {
+		fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationSummary(violationCount))
+	}
+
+	return violationCount > 0
 }
 
 /**
@@ -90,8 +103,8 @@ func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
 		displayOutput(finalResult)
 
 		configFile := config.GetConfigInstance()
-		
-		if options.IsCICDScan() && checkThresholdViolations(finalResult, configFile) {
+
+		if options.IsCICDScan() && CheckThresholdViolations(os.Stderr, finalResult, configFile) {
 			os.Exit(int(errorhandler.ExitCodeOccurrence))
 		}
 	}
