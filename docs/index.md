@@ -280,9 +280,9 @@ In this mode, by default, all enabled runs will be run if `cicdrules` property i
 
 ```yaml
 cicdrules:
+  - "XSSDomHtml"
   - "XSSLabel"
   - "XSSMergeField"
-  - "XSSDomHtml"
 ```
 
 This allows developers to add a subset of the overall ruleset to ASIST to their CI/CD pipelines, and gradually add more rules to CI/CD as they start clearing out findings for other rules. This prevents any issues for rules defined in `cicdrules` from creeping back into the codebase.

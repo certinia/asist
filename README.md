@@ -201,7 +201,7 @@ Configuration files can also be explicitly specified using the `-c` argument (no
 
 Within the config file, you can:
 
-- Enable/disable all the standard rules  
+- Enable/disable all the standard rules
 - Override certain properties of standard rules
 - Exclude files or directories for all rules
 - Exclude files or directories for specific rules
@@ -290,9 +290,9 @@ In this mode, by default, all enabled runs will be run if `cicdrules` property i
 
 ```yaml
 cicdrules: 
+  - "XSSDomHtml"
   - "XSSLabel"
   - "XSSMergeField"
-  - "XSSDomHtml"
 ```
 
 This allows developers to add a subset of the overall ruleset to ASIST to their CI/CD pipelines, and gradually add more rules to CI/CD as they start clearing out findings for other rules. This prevents any issues for rules defined in `cicdrules` from creeping back into the codebase.
