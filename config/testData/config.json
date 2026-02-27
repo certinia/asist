@@ -11,7 +11,8 @@
 	"ruleoverrides": {
 		"XSSTooltip": {
 			"severity": "Medium",
-			"enabled": true
+			"enabled": true,
+			"maxissues": 10
 		}
 	},
 	"customregexrules": {

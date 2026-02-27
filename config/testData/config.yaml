@@ -12,6 +12,7 @@ ruleoverrides:
   XSSTooltip:
     severity: Medium
     enabled: true
+    maxissues: 10
 
 customregexrules:
   CustomRule1:

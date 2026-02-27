@@ -15,6 +15,7 @@ func TestParseConfig_WhenYAMLConfigFileExist_ReturnsConfigInstance(t *testing.T)
 
 	ENABLED_TRUE := true
 	ENABLED_FALSE := false
+	MAX_ISSUES_10 := 10
 
 	expectedConfigFile := Config{
 		EnableAllStandardRules: &ENABLED_TRUE,
@@ -23,8 +24,9 @@ func TestParseConfig_WhenYAMLConfigFileExist_ReturnsConfigInstance(t *testing.T)
 		ExcludeFilesAndFolders: []string{"/force-app-autotests/"},
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				Severity: "Medium",
-				Enabled:  &ENABLED_TRUE,
+				Severity:  "Medium",
+				Enabled:   &ENABLED_TRUE,
+				MaxIssues: &MAX_ISSUES_10,
 			},
 		},
 		CustomRegexRules: map[string]CustomRegexRule{
@@ -92,6 +94,7 @@ func TestParseConfig_WhenJSONConfigFileExist_ReturnsConfigInstance(t *testing.T)
 	const MOCK_CONFIG_FILE_PATH = "./testData/config.json"
 	ENABLED_TRUE := true
 	ENABLED_FALSE := false
+	MAX_ISSUES_10 := 10
 
 	expectedConfigFile := Config{
 		EnableAllStandardRules: &ENABLED_TRUE,
@@ -100,8 +103,9 @@ func TestParseConfig_WhenJSONConfigFileExist_ReturnsConfigInstance(t *testing.T)
 		ExcludeFilesAndFolders: []string{"/force-app-autotests/"},
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				Severity: "Medium",
-				Enabled:  &ENABLED_TRUE,
+				Severity:  "Medium",
+				Enabled:   &ENABLED_TRUE,
+				MaxIssues: &MAX_ISSUES_10,
 			},
 		},
 		CustomRegexRules: map[string]CustomRegexRule{
@@ -476,5 +480,148 @@ func TestGetEnabledCustomRuleIds_WhenCustomRulesNotEmpty_ReturnsRuleIds(t *testi
 	//Then
 	if !reflect.DeepEqual(actualResult, expectedResult) {
 		t.Errorf("%s Actual: %+v, Expected: %+v", "Custom Regex Rule Ids are mismatched!!", actualResult, expectedResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenConfigNil_ReturnsZero(t *testing.T) {
+	//Given
+	var configFile *Config
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("SomeRule")
+
+	//Then
+	if actualResult != 0 {
+		t.Errorf("Expected 0, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenRuleOverridesNil_ReturnsZero(t *testing.T) {
+	//Given
+	configFile := &Config{
+		RuleOverrides: nil,
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("SomeRule")
+
+	//Then
+	if actualResult != 0 {
+		t.Errorf("Expected 0, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenRuleNotInOverrides_ReturnsZero(t *testing.T) {
+	//Given
+	ENABLE := true
+	configFile := &Config{
+		RuleOverrides: map[string]rules.RuleMetadataOverride{
+			"OtherRule": {
+				Enabled: &ENABLE,
+			},
+		},
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("SomeRule")
+
+	//Then
+	if actualResult != 0 {
+		t.Errorf("Expected 0, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenMaxIssuesNil_ReturnsZero(t *testing.T) {
+	//Given
+	ENABLE := true
+	configFile := &Config{
+		RuleOverrides: map[string]rules.RuleMetadataOverride{
+			"XSSTooltip": {
+				Severity: "Medium",
+				Enabled:  &ENABLE,
+			},
+		},
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+
+	//Then
+	if actualResult != 0 {
+		t.Errorf("Expected 0 when MaxIssues is nil, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) {
+	//Given
+	MAX_ISSUES_ZERO := 0
+	configFile := &Config{
+		RuleOverrides: map[string]rules.RuleMetadataOverride{
+			"XSSTooltip": {
+				MaxIssues: &MAX_ISSUES_ZERO,
+			},
+		},
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+
+	//Then
+	if actualResult != 0 {
+		t.Errorf("Expected 0 when MaxIssues is explicitly 0, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenMaxIssuesSet_ReturnsValue(t *testing.T) {
+	//Given
+	MAX_ISSUES := 50
+	configFile := &Config{
+		RuleOverrides: map[string]rules.RuleMetadataOverride{
+			"XSSTooltip": {
+				MaxIssues: &MAX_ISSUES,
+			},
+		},
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+
+	//Then
+	if actualResult != 50 {
+		t.Errorf("Expected 50, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenParsedFromYAML_ReturnsValue(t *testing.T) {
+	//Given
+	const MOCK_CONFIG_FILE_PATH = "./testData/config.yaml"
+	configFile, err := ParseConfig(MOCK_CONFIG_FILE_PATH)
+	if err != nil {
+		t.Fatalf("Failed to parse config: %v", err)
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+
+	//Then
+	if actualResult != 10 {
+		t.Errorf("Expected 10 from YAML config, got %d", actualResult)
+	}
+}
+
+func TestGetRuleMaxIssues_WhenParsedFromJSON_ReturnsValue(t *testing.T) {
+	//Given
+	const MOCK_CONFIG_FILE_PATH = "./testData/config.json"
+	configFile, err := ParseConfig(MOCK_CONFIG_FILE_PATH)
+	if err != nil {
+		t.Fatalf("Failed to parse config: %v", err)
+	}
+
+	//When
+	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+
+	//Then
+	if actualResult != 10 {
+		t.Errorf("Expected 10 from JSON config, got %d", actualResult)
 	}
 }
