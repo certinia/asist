@@ -49,6 +49,7 @@ ruleoverrides:
 # includepattern: specify file types to be scanned.
 # excludepattern: specify file types not to be scanned.
 # `enabled` property is used to enable/disable a custom rule.
+# `cicdmaxissues` property sets the maximum allowed issue count for this custom rule in CI/CD mode (default is 0).
 customregexrules:
   CustomRule1:
     name: customName1
@@ -59,6 +60,7 @@ customregexrules:
     pattern: Label
     includepattern: "\\.component$|\\.page$|\\.cls$|\\.email"
     excludepattern: ""
+    cicdmaxissues: 10  # Allow up to 10 CustomRule1 issues in CI/CD mode
   CustomRule2:
     name: customName2
     description: Please fix this custom rule

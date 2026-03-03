@@ -16,6 +16,7 @@ func TestParseConfig_WhenYAMLConfigFileExist_ReturnsConfigInstance(t *testing.T)
 	ENABLED_TRUE := true
 	ENABLED_FALSE := false
 	MAX_ISSUES_10 := 10
+	CUSTOM_MAX_5 := 5
 
 	expectedConfigFile := Config{
 		EnableAllStandardRules: &ENABLED_TRUE,
@@ -39,6 +40,7 @@ func TestParseConfig_WhenYAMLConfigFileExist_ReturnsConfigInstance(t *testing.T)
 				Pattern:        "Label",
 				IncludePattern: "\\.component$|\\.page$|\\.cls$|\\.email",
 				ExcludePattern: "",
+				CicdMaxIssues:  &CUSTOM_MAX_5,
 			},
 		},
 		CICDRules: []string{
@@ -95,6 +97,7 @@ func TestParseConfig_WhenJSONConfigFileExist_ReturnsConfigInstance(t *testing.T)
 	ENABLED_TRUE := true
 	ENABLED_FALSE := false
 	MAX_ISSUES_10 := 10
+	CUSTOM_MAX_5 := 5
 
 	expectedConfigFile := Config{
 		EnableAllStandardRules: &ENABLED_TRUE,
@@ -118,6 +121,7 @@ func TestParseConfig_WhenJSONConfigFileExist_ReturnsConfigInstance(t *testing.T)
 				Pattern:        "Label",
 				IncludePattern: "\\.component$|\\.page$|\\.cls$|\\.email",
 				ExcludePattern: "",
+				CicdMaxIssues:  &CUSTOM_MAX_5,
 			},
 		},
 		CICDRules: []string{
@@ -623,5 +627,77 @@ func TestGetRuleCicdMaxIssues_WhenParsedFromJSON_ReturnsValue(t *testing.T) {
 	//Then
 	if actualResult != 10 {
 		t.Errorf("Expected 10 from JSON config, got %d", actualResult)
+	}
+}
+func TestGetRuleCicdMaxIssues_WhenCustomRuleHasCicdMaxIssues_ReturnsValue(t *testing.T) {
+	//Given
+	MAX_ISSUES := 25
+	configFile := &Config{
+		CustomRegexRules: map[string]CustomRegexRule{
+			"MyCustomRule": {
+				CicdMaxIssues: &MAX_ISSUES,
+			},
+		},
+	}
+
+	//When
+	actualResult := configFile.GetRuleCicdMaxIssues("MyCustomRule")
+
+	//Then
+	if actualResult != 25 {
+		t.Errorf("Expected 25 for custom rule cicdmaxissues, got %d", actualResult)
+	}
+}
+
+func TestGetRuleCicdMaxIssues_WhenCustomRuleHasNoCicdMaxIssues_ReturnsZero(t *testing.T) {
+	//Given
+	configFile := &Config{
+		CustomRegexRules: map[string]CustomRegexRule{
+			"MyCustomRule": {
+				Name: "MyCustomRule",
+			},
+		},
+	}
+
+	//When
+	actualResult := configFile.GetRuleCicdMaxIssues("MyCustomRule")
+
+	//Then
+	if actualResult != 0 {
+		t.Errorf("Expected 0 when custom rule has no cicdmaxissues, got %d", actualResult)
+	}
+}
+
+func TestGetRuleCicdMaxIssues_WhenCustomRuleParsedFromYAML_ReturnsValue(t *testing.T) {
+	//Given
+	const MOCK_CONFIG_FILE_PATH = "./testData/config.yaml"
+	configFile, err := ParseConfig(MOCK_CONFIG_FILE_PATH)
+	if err != nil {
+		t.Fatalf("Failed to parse config: %v", err)
+	}
+
+	//When
+	actualResult := configFile.GetRuleCicdMaxIssues("CustomRule1")
+
+	//Then
+	if actualResult != 5 {
+		t.Errorf("Expected 5 from YAML custom rule cicdmaxissues, got %d", actualResult)
+	}
+}
+
+func TestGetRuleCicdMaxIssues_WhenCustomRuleParsedFromJSON_ReturnsValue(t *testing.T) {
+	//Given
+	const MOCK_CONFIG_FILE_PATH = "./testData/config.json"
+	configFile, err := ParseConfig(MOCK_CONFIG_FILE_PATH)
+	if err != nil {
+		t.Fatalf("Failed to parse config: %v", err)
+	}
+
+	//When
+	actualResult := configFile.GetRuleCicdMaxIssues("CustomRule1")
+
+	//Then
+	if actualResult != 5 {
+		t.Errorf("Expected 5 from JSON custom rule cicdmaxissues, got %d", actualResult)
 	}
 }

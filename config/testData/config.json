@@ -24,7 +24,8 @@
 			"rulecategory": "Security",
 			"pattern": "Label",
 			"includepattern": "\\.component$|\\.page$|\\.cls$|\\.email",
-			"excludepattern": ""
+			"excludepattern": "",
+			"cicdmaxissues": 5
 		}
 	}
 }

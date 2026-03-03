@@ -15,6 +15,12 @@ type CustomRule struct {
  * NewCustomRule - method used create a custom rule
  */
 func NewCustomRule(customRule config.CustomRegexRule, customRuleID rules.RuleID) *CustomRule {
+	cicdMaxIssues := 0
+
+	if customRule.CicdMaxIssues != nil {
+		cicdMaxIssues = *customRule.CicdMaxIssues
+	}
+
 	return &CustomRule{
 		metadata: rules.RuleMetadata{
 			ID:             customRuleID,
@@ -25,6 +31,7 @@ func NewCustomRule(customRule config.CustomRegexRule, customRuleID rules.RuleID)
 			IncludePattern: customRule.IncludePattern,
 			ExcludePattern: customRule.ExcludePattern,
 			Pattern:        customRule.Pattern,
+			CicdMaxIssues:  cicdMaxIssues,
 		},
 	}
 }

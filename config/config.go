@@ -39,6 +39,7 @@ type CustomRegexRule struct {
 	Pattern        string
 	IncludePattern string
 	ExcludePattern string
+	CicdMaxIssues  *int
 }
 
 var config *Config
@@ -130,20 +131,29 @@ func (c *Config) GetCICDRuleIds() []rules.RuleID {
 }
 
 /**
- * Returns ruleoverrides.<rule>.cicdmaxissues if set, otherwise 0.
+ * Returns the cicdmaxissues threshold for a rule.
+ * Checks ruleoverrides first (standard rules), then customregexrules (custom rules).
+ * Returns 0 if not set.
  */
 func (c *Config) GetRuleCicdMaxIssues(ruleId rules.RuleID) int {
-	if c == nil || c.RuleOverrides == nil {
+	if c == nil {
 		return 0
 	}
-	
-	// Check if cicdmaxissues is explicitly set in ruleoverrides
+
+	// Check standard rule overrides
 	if override, exists := c.RuleOverrides[string(ruleId)]; exists {
 		if override.CicdMaxIssues != nil {
 			return *override.CicdMaxIssues
 		}
 	}
-	
+
+	// Check custom rules
+	if customRule, exists := c.CustomRegexRules[string(ruleId)]; exists {
+		if customRule.CicdMaxIssues != nil {
+			return *customRule.CicdMaxIssues
+		}
+	}
+
 	return 0
 }
 

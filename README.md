@@ -235,6 +235,7 @@ customregexrules:
     pattern: "System\\.debug\\("
     includepattern: "\\.cls$"
     excludepattern: "Test\\.cls$"
+    cicdmaxissues: 10  # Allow up to 10 occurrences in CI/CD mode
 ```
 
 You can test this specific rule like this:
@@ -299,17 +300,31 @@ This allows developers to add a subset of the overall ruleset to ASIST to their 
 
 ## Rule Max Issues
 
-When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `cicdmaxissues` property in [`ruleoverrides`](#-customizing-standard-rules) allows you to set maximum allowed issue counts for specific rules for CI/CD mode (with option -j ) scanning only. 
+When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `cicdmaxissues` property allows you to set maximum allowed issue counts for specific rules for CI/CD mode (with option -j ) scanning only.
 
 **By default, rules have a limit of 0 issues.** When a rule exceeds its `cicdmaxissues` threshold, ASIST will exit with an error code (see [Exit Codes](#-exit-codes)). You only need to set `cicdmaxissues` if you want to allow existing issues while preventing them from growing.
+
+For **standard rules**, set `cicdmaxissues` under `ruleoverrides`:
 
 ```yaml
 ruleoverrides:
   XSSLabel:
-    cicdmaxissues: 150  # Allow up to 150 XSSTooltip issues (grandfather existing issues)
+    cicdmaxissues: 150  # Allow up to 150 XSSLabel issues (grandfather existing issues)
   XSSMergeField:
     cicdmaxissues: 0    # Explicitly set to 0 (same as default - no issues allowed)
   # XSSDomHtml has no cicdmaxissues set, defaults to 0 (no issues allowed)
+```
+
+For **custom rules**, set `cicdmaxissues` directly in the rule definition:
+
+```yaml
+customregexrules:
+  NoDebugStatements:
+    name: doNotDebug
+    severity: Critical
+    pattern: "System\\.debug\\("
+    includepattern: "\\.cls$"
+    cicdmaxissues: 20  # Allow up to 20 existing debug statements while you clean them up
 ```
 
 This feature allows you to:
