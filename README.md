@@ -299,7 +299,7 @@ This allows developers to add a subset of the overall ruleset to ASIST to their 
 
 ## Rule Max Issues
 
-When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `cicdmaxissues` property in [`ruleoverrides`](#-customizing-standard-rules) allows you to set maximum allowed issue counts for specific rules.
+When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `cicdmaxissues` property in [`ruleoverrides`](#-customizing-standard-rules) allows you to set maximum allowed issue counts for specific rules for CI/CD mode (with option -j ) scanning only. 
 
 **By default, rules have a limit of 0 issues.** When a rule exceeds its `cicdmaxissues` threshold, ASIST will exit with an error code (see [Exit Codes](#-exit-codes)). You only need to set `cicdmaxissues` if you want to allow existing issues while preventing them from growing.
 
