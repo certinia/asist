@@ -67,7 +67,7 @@ func ParseConfig(path string) (*Config, error) {
 }
 
 /**
-*	GetConfigFilePath - Returns the file path of the config file (JSON or YAML) if it exists, otherwise an empty string.
+ *	GetConfigFilePath - Returns the file path of the config file (JSON or YAML) if it exists, otherwise an empty string.
  */
 func GetConfigFilePath(rootPath string, configFilePath string, isBaselineEnabled bool) (string, error) {
 	if configFilePath != "" || !isBaselineEnabled {
@@ -88,7 +88,7 @@ func GetConfigFilePath(rootPath string, configFilePath string, isBaselineEnabled
 }
 
 /**
-*	FilterExcludedFilesAndFolders - Filter out the paths from the provided list that are present in the ExcludeFilesAndFolders property of config file.
+ *	FilterExcludedFilesAndFolders - Filter out the paths from the provided list that are present in the ExcludeFilesAndFolders property of config file.
  */
 func (c *Config) FilterExcludedFilesAndFolders(paths []string) []string {
 	var filteredPaths []string
@@ -130,10 +130,9 @@ func (c *Config) GetCICDRuleIds() []rules.RuleID {
 }
 
 /**
- * Returns the max allowed issues for a specific rule ID.
  * Returns ruleoverrides.<rule>.cicdmaxissues if set, otherwise 0.
  */
-func (c *Config) GetRuleMaxIssues(ruleId rules.RuleID) int {
+func (c *Config) GetRuleCicdMaxIssues(ruleId rules.RuleID) int {
 	if c == nil || c.RuleOverrides == nil {
 		return 0
 	}
@@ -149,8 +148,8 @@ func (c *Config) GetRuleMaxIssues(ruleId rules.RuleID) int {
 }
 
 /**
-* GetEnabledOverridedStandardRuleIds - Return the standard rule Ids
-*	Where RuleOveride property is defined and override rules enabled property is set to true or nil
+ * GetEnabledOverridedStandardRuleIds - Return the standard rule Ids
+ *	Where RuleOveride property is defined and override rules enabled property is set to true or nil
  */
 func (c *Config) GetEnabledOverridedStandardRuleIds(standarRuleIds []rules.RuleID) []rules.RuleID {
 	enabledRuleIds := []rules.RuleID{}

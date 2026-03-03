@@ -68,7 +68,7 @@ func CheckThresholdViolations(w io.Writer, finalResult *finding.Output, configFi
 
 	for _, ruleId := range sortedRuleIds {
 		count := findingsPerRule[ruleId]
-		maxIssuesAllowed := configFile.GetRuleMaxIssues(ruleId)
+		maxIssuesAllowed := configFile.GetRuleCicdMaxIssues(ruleId)
 
 		if count > maxIssuesAllowed {
 			if violationCount == 0 {

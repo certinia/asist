@@ -483,12 +483,12 @@ func TestGetEnabledCustomRuleIds_WhenCustomRulesNotEmpty_ReturnsRuleIds(t *testi
 	}
 }
 
-func TestGetRuleMaxIssues_WhenConfigNil_ReturnsZero(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenConfigNil_ReturnsZero(t *testing.T) {
 	//Given
 	var configFile *Config
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("SomeRule")
+	actualResult := configFile.GetRuleCicdMaxIssues("SomeRule")
 
 	//Then
 	if actualResult != 0 {
@@ -496,14 +496,14 @@ func TestGetRuleMaxIssues_WhenConfigNil_ReturnsZero(t *testing.T) {
 	}
 }
 
-func TestGetRuleMaxIssues_WhenRuleOverridesNil_ReturnsZero(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenRuleOverridesNil_ReturnsZero(t *testing.T) {
 	//Given
 	configFile := &Config{
 		RuleOverrides: nil,
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("SomeRule")
+	actualResult := configFile.GetRuleCicdMaxIssues("SomeRule")
 
 	//Then
 	if actualResult != 0 {
@@ -511,7 +511,7 @@ func TestGetRuleMaxIssues_WhenRuleOverridesNil_ReturnsZero(t *testing.T) {
 	}
 }
 
-func TestGetRuleMaxIssues_WhenRuleNotInOverrides_ReturnsZero(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenRuleNotInOverrides_ReturnsZero(t *testing.T) {
 	//Given
 	ENABLE := true
 	configFile := &Config{
@@ -523,7 +523,7 @@ func TestGetRuleMaxIssues_WhenRuleNotInOverrides_ReturnsZero(t *testing.T) {
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("SomeRule")
+	actualResult := configFile.GetRuleCicdMaxIssues("SomeRule")
 
 	//Then
 	if actualResult != 0 {
@@ -531,7 +531,7 @@ func TestGetRuleMaxIssues_WhenRuleNotInOverrides_ReturnsZero(t *testing.T) {
 	}
 }
 
-func TestGetRuleMaxIssues_WhenMaxIssuesNil_ReturnsZero(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenMaxIssuesNil_ReturnsZero(t *testing.T) {
 	//Given
 	ENABLE := true
 	configFile := &Config{
@@ -544,7 +544,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesNil_ReturnsZero(t *testing.T) {
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+	actualResult := configFile.GetRuleCicdMaxIssues("XSSTooltip")
 
 	//Then
 	if actualResult != 0 {
@@ -552,7 +552,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesNil_ReturnsZero(t *testing.T) {
 	}
 }
 
-func TestGetRuleMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) {
 	//Given
 	MAX_ISSUES_ZERO := 0
 	configFile := &Config{
@@ -564,7 +564,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) 
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+	actualResult := configFile.GetRuleCicdMaxIssues("XSSTooltip")
 
 	//Then
 	if actualResult != 0 {
@@ -572,7 +572,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) 
 	}
 }
 
-func TestGetRuleMaxIssues_WhenMaxIssuesSet_ReturnsValue(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenMaxIssuesSet_ReturnsValue(t *testing.T) {
 	//Given
 	MAX_ISSUES := 50
 	configFile := &Config{
@@ -584,7 +584,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesSet_ReturnsValue(t *testing.T) {
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+	actualResult := configFile.GetRuleCicdMaxIssues("XSSTooltip")
 
 	//Then
 	if actualResult != 50 {
@@ -592,7 +592,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesSet_ReturnsValue(t *testing.T) {
 	}
 }
 
-func TestGetRuleMaxIssues_WhenParsedFromYAML_ReturnsValue(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenParsedFromYAML_ReturnsValue(t *testing.T) {
 	//Given
 	const MOCK_CONFIG_FILE_PATH = "./testData/config.yaml"
 	configFile, err := ParseConfig(MOCK_CONFIG_FILE_PATH)
@@ -601,7 +601,7 @@ func TestGetRuleMaxIssues_WhenParsedFromYAML_ReturnsValue(t *testing.T) {
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+	actualResult := configFile.GetRuleCicdMaxIssues("XSSTooltip")
 
 	//Then
 	if actualResult != 10 {
@@ -609,7 +609,7 @@ func TestGetRuleMaxIssues_WhenParsedFromYAML_ReturnsValue(t *testing.T) {
 	}
 }
 
-func TestGetRuleMaxIssues_WhenParsedFromJSON_ReturnsValue(t *testing.T) {
+func TestGetRuleCicdMaxIssues_WhenParsedFromJSON_ReturnsValue(t *testing.T) {
 	//Given
 	const MOCK_CONFIG_FILE_PATH = "./testData/config.json"
 	configFile, err := ParseConfig(MOCK_CONFIG_FILE_PATH)
@@ -618,7 +618,7 @@ func TestGetRuleMaxIssues_WhenParsedFromJSON_ReturnsValue(t *testing.T) {
 	}
 
 	//When
-	actualResult := configFile.GetRuleMaxIssues("XSSTooltip")
+	actualResult := configFile.GetRuleCicdMaxIssues("XSSTooltip")
 
 	//Then
 	if actualResult != 10 {

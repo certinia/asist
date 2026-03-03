@@ -291,7 +291,7 @@ func TestCheckThresholdViolations_WhenMultipleRules_ReportsAllViolations(t *test
 	}
 }
 
-func TestCheckThresholdViolations_WhenMaxIssuesNotSet_DefaultsToZero(t *testing.T) {
+func TestCheckThresholdViolations_WhenCicdMaxIssuesNotSet_DefaultsToZero(t *testing.T) {
 	//Given
 	finalResult := &finding.Output{
 		Results: []finding.Finding{
@@ -308,7 +308,7 @@ func TestCheckThresholdViolations_WhenMaxIssuesNotSet_DefaultsToZero(t *testing.
 
 	//Then
 	if !result {
-		t.Errorf("Expected violation when maxissues defaults to 0 and rule has 1 finding")
+		t.Errorf("Expected violation when cicdmaxissues defaults to 0 and rule has 1 finding")
 	}
 	output := buf.String()
 	if !strings.Contains(output, "Rule SomeRule has 1 issues (max allowed: 0)") {
