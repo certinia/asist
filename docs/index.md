@@ -211,7 +211,7 @@ See our [example config file](https://github.com/certinia/asist/blob/main/.asist
 Users can override certain properties of standard rules according to their needs, allowing them to customize the behavior of specific rules by:
 
 - Disabling rules entirely: `enabled`
-- Limiting the number of allowed rule violations: [`maxissues`](#rule-max-issues)
+- Limiting the number of allowed rule violations: [`cicdmaxissues`](#rule-max-issues)
 - Tweaking rule severity: `severity`
 - Tweaking what files should be scanned: `includepattern`
 - Tweaking what files should not be scanned: `excludepattern`
@@ -289,22 +289,22 @@ This allows developers to add a subset of the overall ruleset to ASIST to their 
 
 ## Rule Max Issues
 
-When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `maxissues` property in [`ruleoverrides`](#-customizing-standard-rules) allows you to set maximum allowed issue counts for specific rules.
+When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `cicdmaxissues` property in [`ruleoverrides`](#-customizing-standard-rules) allows you to set maximum allowed issue counts for specific rules.
 
-**By default, rules have a limit of 0 issues.** When a rule exceeds its `maxissues` threshold, ASIST will exit with an error code (see [Exit Codes](#-exit-codes)). You only need to set `maxissues` if you want to allow existing issues while preventing them from growing.
+**By default, rules have a limit of 0 issues.** When a rule exceeds its `cicdmaxissues` threshold, ASIST will exit with an error code (see [Exit Codes](#-exit-codes)). You only need to set `cicdmaxissues` if you want to allow existing issues while preventing them from growing.
 
 ```yaml
 ruleoverrides:
   XSSLabel:
-    maxissues: 150  # Allow up to 150 XSSTooltip issues (grandfather existing issues)
+    cicdmaxissues: 150  # Allow up to 150 XSSTooltip issues (grandfather existing issues)
   XSSMergeField:
-    maxissues: 0    # Explicitly set to 0 (same as default - no issues allowed)
-  # XSSDomHtml has no maxissues set, defaults to 0 (no issues allowed)
+    cicdmaxissues: 0    # Explicitly set to 0 (same as default - no issues allowed)
+  # XSSDomHtml has no cicdmaxissues set, defaults to 0 (no issues allowed)
 ```
 
 This feature allows you to:
 
-- Gradually introduce stricter security requirements by lowering maxissues over time
+- Gradually introduce stricter security requirements by lowering cicdmaxissues over time
 - Prevent technical debt from growing while you address existing issues  
 - Start enforcing security on a codebase with 150 existing issues, then reduce to 100, 50, and eventually 0
 

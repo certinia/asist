@@ -6,7 +6,7 @@ dontforceignore: true
 ruleoverrides:
   ExposedMessageChannel:
     enabled: true
-    maxissues: 5
+    cicdmaxissues: 5
   ProtectedCustomSetting:
     enabled: true
-    maxissues: 1
+    cicdmaxissues: 1

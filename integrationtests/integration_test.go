@@ -802,18 +802,18 @@ func TestMaxIssues_WhenConfigParsed_MaxIssuesDeserialized(t *testing.T) {
 
 	exposedMax := parsedConfig.GetRuleMaxIssues("ExposedMessageChannel")
 	if exposedMax != 5 {
-		t.Errorf("Expected ExposedMessageChannel maxissues=5, got %d", exposedMax)
+		t.Errorf("Expected ExposedMessageChannel cicdmaxissues=5, got %d", exposedMax)
 	}
 
 	protectedMax := parsedConfig.GetRuleMaxIssues("ProtectedCustomSetting")
 	if protectedMax != 1 {
-		t.Errorf("Expected ProtectedCustomSetting maxissues=1, got %d", protectedMax)
+		t.Errorf("Expected ProtectedCustomSetting cicdmaxissues=1, got %d", protectedMax)
 	}
 
 	// Rule not in config should default to 0
 	unknownMax := parsedConfig.GetRuleMaxIssues("UnknownRule")
 	if unknownMax != 0 {
-		t.Errorf("Expected UnknownRule maxissues=0, got %d", unknownMax)
+		t.Errorf("Expected UnknownRule cicdmaxissues=0, got %d", unknownMax)
 	}
 }
 

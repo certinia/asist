@@ -155,7 +155,7 @@ func TestCheckThresholdViolations_WhenWithinThreshold_ReturnsFalse(t *testing.T)
 	configFile := &config.Config{
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				MaxIssues: intPtr(10),
+				CicdMaxIssues: intPtr(10),
 			},
 		},
 	}
@@ -187,7 +187,7 @@ func TestCheckThresholdViolations_WhenExceedsThreshold_ReturnsTrue(t *testing.T)
 	configFile := &config.Config{
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				MaxIssues: intPtr(2),
+				CicdMaxIssues: intPtr(2),
 			},
 		},
 	}
@@ -207,7 +207,7 @@ func TestCheckThresholdViolations_WhenExceedsThreshold_ReturnsTrue(t *testing.T)
 	if !strings.Contains(output, "Rule XSSTooltip has 5 issues (max allowed: 2)") {
 		t.Errorf("Expected violation detail in output, got: %s", output)
 	}
-	if !strings.Contains(output, "1 rule(s) exceeded their maxissues threshold.") {
+	if !strings.Contains(output, "1 rule(s) exceeded their cicdmaxissues threshold.") {
 		t.Errorf("Expected summary in output, got: %s", output)
 	}
 }
@@ -226,7 +226,7 @@ func TestCheckThresholdViolations_WhenExactlyAtThreshold_ReturnsFalse(t *testing
 	configFile := &config.Config{
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				MaxIssues: intPtr(5),
+				CicdMaxIssues: intPtr(5),
 			},
 		},
 	}
@@ -259,10 +259,10 @@ func TestCheckThresholdViolations_WhenMultipleRules_ReportsAllViolations(t *test
 	configFile := &config.Config{
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"RuleA": {
-				MaxIssues: intPtr(1), // 3 > 1, violation
+				CicdMaxIssues: intPtr(1), // 3 > 1, violation
 			},
 			"RuleB": {
-				MaxIssues: intPtr(5), // 2 <= 5, no violation
+				CicdMaxIssues: intPtr(5), // 2 <= 5, no violation
 			},
 			// RuleC has no override, defaults to 0, 1 > 0, violation
 		},
@@ -286,7 +286,7 @@ func TestCheckThresholdViolations_WhenMultipleRules_ReportsAllViolations(t *test
 	if strings.Contains(output, "RuleB") {
 		t.Errorf("RuleB should not appear in violations, got: %s", output)
 	}
-	if !strings.Contains(output, "2 rule(s) exceeded their maxissues threshold.") {
+	if !strings.Contains(output, "2 rule(s) exceeded their cicdmaxissues threshold.") {
 		t.Errorf("Expected summary with 2 violations, got: %s", output)
 	}
 }

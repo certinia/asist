@@ -131,17 +131,17 @@ func (c *Config) GetCICDRuleIds() []rules.RuleID {
 
 /**
  * Returns the max allowed issues for a specific rule ID.
- * Returns ruleoverrides.<rule>.maxissues if set, otherwise 0.
+ * Returns ruleoverrides.<rule>.cicdmaxissues if set, otherwise 0.
  */
 func (c *Config) GetRuleMaxIssues(ruleId rules.RuleID) int {
 	if c == nil || c.RuleOverrides == nil {
 		return 0
 	}
 	
-	// Check if maxissues is explicitly set in ruleoverrides
+	// Check if cicdmaxissues is explicitly set in ruleoverrides
 	if override, exists := c.RuleOverrides[string(ruleId)]; exists {
-		if override.MaxIssues != nil {
-			return *override.MaxIssues
+		if override.CicdMaxIssues != nil {
+			return *override.CicdMaxIssues
 		}
 	}
 	

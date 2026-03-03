@@ -24,9 +24,9 @@ func TestParseConfig_WhenYAMLConfigFileExist_ReturnsConfigInstance(t *testing.T)
 		ExcludeFilesAndFolders: []string{"/force-app-autotests/"},
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				Severity:  "Medium",
-				Enabled:   &ENABLED_TRUE,
-				MaxIssues: &MAX_ISSUES_10,
+				Severity:      "Medium",
+				Enabled:       &ENABLED_TRUE,
+				CicdMaxIssues: &MAX_ISSUES_10,
 			},
 		},
 		CustomRegexRules: map[string]CustomRegexRule{
@@ -103,9 +103,9 @@ func TestParseConfig_WhenJSONConfigFileExist_ReturnsConfigInstance(t *testing.T)
 		ExcludeFilesAndFolders: []string{"/force-app-autotests/"},
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				Severity:  "Medium",
-				Enabled:   &ENABLED_TRUE,
-				MaxIssues: &MAX_ISSUES_10,
+				Severity:      "Medium",
+				Enabled:       &ENABLED_TRUE,
+				CicdMaxIssues: &MAX_ISSUES_10,
 			},
 		},
 		CustomRegexRules: map[string]CustomRegexRule{
@@ -548,7 +548,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesNil_ReturnsZero(t *testing.T) {
 
 	//Then
 	if actualResult != 0 {
-		t.Errorf("Expected 0 when MaxIssues is nil, got %d", actualResult)
+		t.Errorf("Expected 0 when CicdMaxIssues is nil, got %d", actualResult)
 	}
 }
 
@@ -558,7 +558,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) 
 	configFile := &Config{
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				MaxIssues: &MAX_ISSUES_ZERO,
+				CicdMaxIssues: &MAX_ISSUES_ZERO,
 			},
 		},
 	}
@@ -568,7 +568,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesExplicitlyZero_ReturnsZero(t *testing.T) 
 
 	//Then
 	if actualResult != 0 {
-		t.Errorf("Expected 0 when MaxIssues is explicitly 0, got %d", actualResult)
+		t.Errorf("Expected 0 when CicdMaxIssues is explicitly 0, got %d", actualResult)
 	}
 }
 
@@ -578,7 +578,7 @@ func TestGetRuleMaxIssues_WhenMaxIssuesSet_ReturnsValue(t *testing.T) {
 	configFile := &Config{
 		RuleOverrides: map[string]rules.RuleMetadataOverride{
 			"XSSTooltip": {
-				MaxIssues: &MAX_ISSUES,
+				CicdMaxIssues: &MAX_ISSUES,
 			},
 		},
 	}

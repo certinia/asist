@@ -46,6 +46,45 @@ func TestOverride(t *testing.T) {
 	}
 }
 
+func TestOverride_WhenCicdMaxIssuesSet_PopulatesRuleMetadata(t *testing.T) {
+	// Given
+	standardRuleMetadata := RuleMetadata{
+		ID:       "SampleRule1",
+		Severity: SeverityHigh,
+	}
+	maxIssues := 42
+	override := RuleMetadataOverride{
+		CicdMaxIssues: &maxIssues,
+	}
+
+	// When
+	standardRuleMetadata.Override(override, false)
+
+	// Then
+	if standardRuleMetadata.CicdMaxIssues != 42 {
+		t.Errorf("Expected CicdMaxIssues to be 42, got %d", standardRuleMetadata.CicdMaxIssues)
+	}
+}
+
+func TestOverride_WhenCicdMaxIssuesNotSet_DefaultsToZero(t *testing.T) {
+	// Given
+	standardRuleMetadata := RuleMetadata{
+		ID:       "SampleRule1",
+		Severity: SeverityHigh,
+	}
+	override := RuleMetadataOverride{
+		Severity: "Critical",
+	}
+
+	// When
+	standardRuleMetadata.Override(override, false)
+
+	// Then
+	if standardRuleMetadata.CicdMaxIssues != 0 {
+		t.Errorf("Expected CicdMaxIssues to default to 0, got %d", standardRuleMetadata.CicdMaxIssues)
+	}
+}
+
 func TestCreateHashableString(t *testing.T) {
 	// Given
 	occurrence := Occurrence{

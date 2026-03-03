@@ -43,8 +43,8 @@ func ListRules(ruleInstances []*rules.Rule) {
 }
 
 /**
- * CheckThresholdViolations checks if any rule exceeds its configured maxissues.
- * Default maxissues is 0 (no issues allowed).
+ * CheckThresholdViolations checks if any rule exceeds its configured cicdmaxissues.
+ * Default cicdmaxissues is 0 (no issues allowed).
  * Returns true if any threshold is violated, false otherwise.
  */
 func CheckThresholdViolations(w io.Writer, finalResult *finding.Output, configFile *config.Config) bool {
