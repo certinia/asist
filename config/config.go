@@ -39,6 +39,7 @@ type CustomRegexRule struct {
 	Pattern        string
 	IncludePattern string
 	ExcludePattern string
+	CicdMaxIssues  *int
 }
 
 var config *Config
@@ -67,7 +68,7 @@ func ParseConfig(path string) (*Config, error) {
 }
 
 /**
-*	GetConfigFilePath - Returns the file path of the config file (JSON or YAML) if it exists, otherwise an empty string.
+ *	GetConfigFilePath - Returns the file path of the config file (JSON or YAML) if it exists, otherwise an empty string.
  */
 func GetConfigFilePath(rootPath string, configFilePath string, isBaselineEnabled bool) (string, error) {
 	if configFilePath != "" || !isBaselineEnabled {
@@ -88,7 +89,7 @@ func GetConfigFilePath(rootPath string, configFilePath string, isBaselineEnabled
 }
 
 /**
-*	FilterExcludedFilesAndFolders - Filter out the paths from the provided list that are present in the ExcludeFilesAndFolders property of config file.
+ *	FilterExcludedFilesAndFolders - Filter out the paths from the provided list that are present in the ExcludeFilesAndFolders property of config file.
  */
 func (c *Config) FilterExcludedFilesAndFolders(paths []string) []string {
 	var filteredPaths []string
@@ -130,8 +131,35 @@ func (c *Config) GetCICDRuleIds() []rules.RuleID {
 }
 
 /**
-* GetEnabledOverridedStandardRuleIds - Return the standard rule Ids
-*	Where RuleOveride property is defined and override rules enabled property is set to true or nil
+ * Returns the cicdmaxissues threshold for a rule.
+ * Checks ruleoverrides first (standard rules), then customregexrules (custom rules).
+ * Returns 0 if not set.
+ */
+func (c *Config) GetRuleCicdMaxIssues(ruleId rules.RuleID) int {
+	if c == nil {
+		return 0
+	}
+
+	// Check standard rule overrides
+	if override, exists := c.RuleOverrides[string(ruleId)]; exists {
+		if override.CicdMaxIssues != nil {
+			return *override.CicdMaxIssues
+		}
+	}
+
+	// Check custom rules
+	if customRule, exists := c.CustomRegexRules[string(ruleId)]; exists {
+		if customRule.CicdMaxIssues != nil {
+			return *customRule.CicdMaxIssues
+		}
+	}
+
+	return 0
+}
+
+/**
+ * GetEnabledOverridedStandardRuleIds - Return the standard rule Ids
+ *	Where RuleOveride property is defined and override rules enabled property is set to true or nil
  */
 func (c *Config) GetEnabledOverridedStandardRuleIds(standarRuleIds []rules.RuleID) []rules.RuleID {
 	enabledRuleIds := []rules.RuleID{}

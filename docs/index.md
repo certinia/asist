@@ -57,7 +57,6 @@ Alternatively:
 - To cross-compile: `GOOS=windows GOARCH=amd64 go build -o asist.exe .`
 - To build binaries for the most common platforms, run: `make build-binaries`
 
-
 ## 🕹️ Usage
 
 To see the help, run:
@@ -198,12 +197,12 @@ Configuration files can also be explicitly specified using the `-c` argument (no
 
 Within the config file, you can:
 
-* Enable/disable all the standard rules
-* Override certain properties of standard rules
-* Exclude files or directories for all rules
-* Exclude files or directories for specific rules
-* Add custom regex rules
-* Define rules to be run in CI/CD mode
+- Enable/disable all the standard rules
+- Override certain properties of standard rules
+- Exclude files or directories for all rules
+- Exclude files or directories for specific rules
+- Add custom regex rules
+- Define rules to be run in CI/CD mode
 
 See our [example config file](https://github.com/certinia/asist/blob/main/.asist.example.yaml) for a walkthrough of all config options.
 
@@ -212,6 +211,7 @@ See our [example config file](https://github.com/certinia/asist/blob/main/.asist
 Users can override certain properties of standard rules according to their needs, allowing them to customize the behavior of specific rules by:
 
 - Disabling rules entirely: `enabled`
+- Limiting the number of allowed rule violations: [`cicdmaxissues`](#rule-max-issues)
 - Tweaking rule severity: `severity`
 - Tweaking what files should be scanned: `includepattern`
 - Tweaking what files should not be scanned: `excludepattern`
@@ -231,10 +231,10 @@ customregexrules:
     pattern: "System\\.debug\\("
     includepattern: "\\.cls$"
     excludepattern: "Test\\.cls$"
+    cicdmaxissues: 10  # Allow up to 10 occurrences in CI/CD mode
 ```
 
 You can test this specific rule like this:
-
 
 ```shell
 asist -c .asist.yaml -r doNotDebug <file>
@@ -281,13 +281,49 @@ In this mode, by default, all enabled runs will be run if `cicdrules` property i
 
 ```yaml
 cicdrules:
+  - "XSSDomHtml"
   - "XSSLabel"
   - "XSSMergeField"
 ```
 
 This allows developers to add a subset of the overall ruleset to ASIST to their CI/CD pipelines, and gradually add more rules to CI/CD as they start clearing out findings for other rules. This prevents any issues for rules defined in `cicdrules` from creeping back into the codebase.
 
-### 📊 Baseline scans
+## Rule Max Issues
+
+When introducing ASIST to an existing codebase, you may have pre-existing security issues that you want to prevent from increasing while you work on fixing them. The `cicdmaxissues` property allows you to set maximum allowed issue counts for specific rules for CI/CD mode (with option -j) scanning only.
+
+**By default, rules have a limit of 0 issues.** When a rule exceeds its `cicdmaxissues` threshold, ASIST will exit with an error code (see [Exit Codes](#-exit-codes)). You only need to set `cicdmaxissues` if you want to allow existing issues while preventing them from growing.
+
+For **standard rules**, set `cicdmaxissues` under `ruleoverrides`:
+
+```yaml
+ruleoverrides:
+  XSSLabel:
+    cicdmaxissues: 150  # Allow up to 150 XSSLabel issues (grandfather existing issues)
+  XSSMergeField:
+    cicdmaxissues: 0    # Explicitly set to 0 (same as default - no issues allowed)
+  # XSSDomHtml has no cicdmaxissues set, defaults to 0 (no issues allowed)
+```
+
+For **custom rules**, set `cicdmaxissues` directly in the rule definition:
+
+```yaml
+customregexrules:
+  NoDebugStatements:
+    name: doNotDebug
+    severity: Critical
+    pattern: "System\\.debug\\("
+    includepattern: "\\.cls$"
+    cicdmaxissues: 20  # Allow up to 20 existing debug statements while you clean them up
+```
+
+This feature allows you to:
+
+- Gradually introduce stricter security requirements by lowering cicdmaxissues over time
+- Prevent technical debt from growing while you address existing issues  
+- Start enforcing security on a codebase with 150 existing issues, then reduce to 100, 50, and eventually 0
+
+## 📊 Baseline scans
 
 This mode is intended for SecOps teams to create benchmarks across multiple projects and measure the adoption of ASIST.
 
@@ -305,32 +341,32 @@ This command will output a JSON like this (when formatted):
 
 ```json
 [
-	{
-		"RepositoryName": "certinia/asist",
-		"RepositoryURL": "git@github.com:certinia/asist.git",
-		"RecordType": "Finding",
-		"Content": {
-			"FindingID": "b17fe249915712219aca7e",
-			"IsCustom": false,
-			"IsFalsePositive": true,
-			"RuleID": "LwcNonStandardPositioning",
-			"Severity": "Medium",
-			"RuleCategory": "Security"
-		}
-	},
-	{
-		"RepositoryName": "certinia/asist",
-		"RepositoryURL": "git@github.com:certinia/asist.git",
-		"RecordType": "Finding",
-		"Content": {
-			"FindingID": "3a2861bee641864816b86d",
-			"IsCustom": false,
-			"IsFalsePositive": true,
-			"RuleID": "LwcNonStandardPositioning",
-			"Severity": "Medium",
-			"RuleCategory": "Security"
-		}
-	}
+ {
+  "RepositoryName": "certinia/asist",
+  "RepositoryURL": "git@github.com:certinia/asist.git",
+  "RecordType": "Finding",
+  "Content": {
+   "FindingID": "b17fe249915712219aca7e",
+   "IsCustom": false,
+   "IsFalsePositive": true,
+   "RuleID": "LwcNonStandardPositioning",
+   "Severity": "Medium",
+   "RuleCategory": "Security"
+  }
+ },
+ {
+  "RepositoryName": "certinia/asist",
+  "RepositoryURL": "git@github.com:certinia/asist.git",
+  "RecordType": "Finding",
+  "Content": {
+   "FindingID": "3a2861bee641864816b86d",
+   "IsCustom": false,
+   "IsFalsePositive": true,
+   "RuleID": "LwcNonStandardPositioning",
+   "Severity": "Medium",
+   "RuleCategory": "Security"
+  }
+ }
 ]
 ```
 
@@ -341,15 +377,14 @@ A few differences can be observed compared to regular scans:
 - Each issue is assigned a `FindingID`, which is effectively a hash that uniquely identifies the finding based on the rule, the finding location, and if it's a false positive or not.
 - A few more properties are added, such as if the rule is custom, or if the finding is marked as false positive or not.
 
-
-### 🫣 .gitignore and .forceignore files
+## 🫣 .gitignore and .forceignore files
 
 By default, ASIST will ignore files and folders defined inside .gitignore and .forceignore. If you don't want ASIST to respect .gitignore and .forceignore, you can use the following properties in the config file:
 
 - **dontgitignore**
 - **dontforceignore**
 
-### ⍈ Exit Codes
+## ⍈ Exit Codes
 
 | Exit code | Exit Reason                                              |
 | --------- | -------------------------------------------------------- |
@@ -405,5 +440,5 @@ This extension is shipped with prebuilt ASIST binaries, but if you need to speci
 
 1. Open the ASIST `Extension settings`
 1. Navigate to the `Workspace` tab
-2. Enable the `Custom Binary Enabled` setting
-3. Provide the path to your ASIST binary in `Custom Binary Path`
+1. Enable the `Custom Binary Enabled` setting
+1. Provide the path to your ASIST binary in `Custom Binary Path`

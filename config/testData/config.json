@@ -11,7 +11,8 @@
 	"ruleoverrides": {
 		"XSSTooltip": {
 			"severity": "Medium",
-			"enabled": true
+			"enabled": true,
+			"cicdmaxissues": 10
 		}
 	},
 	"customregexrules": {
@@ -23,7 +24,8 @@
 			"rulecategory": "Security",
 			"pattern": "Label",
 			"includepattern": "\\.component$|\\.page$|\\.cls$|\\.email",
-			"excludepattern": ""
+			"excludepattern": "",
+			"cicdmaxissues": 5
 		}
 	}
 }

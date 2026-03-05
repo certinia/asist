@@ -1,0 +1,12 @@
+enableallstandardrules: true
+
+dontgitignore: true
+dontforceignore: true
+
+ruleoverrides:
+  ExposedMessageChannel:
+    enabled: true
+    cicdmaxissues: 5
+  ProtectedCustomSetting:
+    enabled: true
+    cicdmaxissues: 1

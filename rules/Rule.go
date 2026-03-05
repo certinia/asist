@@ -46,6 +46,8 @@ type RuleMetadata struct {
 	RuleCategory RuleCategory
 	//Qualifier - don't search the file if the file does not contain the qualifier
 	Qualifier string
+	// CicdMaxIssues is the maximum number of issues allowed in CI/CD mode (0 = none allowed)
+	CicdMaxIssues int
 }
 
 type Occurrence struct {
@@ -61,6 +63,7 @@ type RuleMetadataOverride struct {
 	ExcludePattern string
 	IncludePattern string
 	Enabled        *bool
+	CicdMaxIssues  *int
 }
 
 /**
@@ -75,6 +78,9 @@ func (md *RuleMetadata) Override(overrideRule RuleMetadataOverride, isBaselineSc
 	}
 	if overrideRule.ExcludePattern != "" {
 		md.ExcludePattern = overrideRule.ExcludePattern
+	}
+	if overrideRule.CicdMaxIssues != nil {
+		md.CicdMaxIssues = *overrideRule.CicdMaxIssues
 	}
 }
 

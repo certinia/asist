@@ -12,6 +12,7 @@ ruleoverrides:
   XSSTooltip:
     severity: Medium
     enabled: true
+    cicdmaxissues: 10
 
 customregexrules:
   CustomRule1:
@@ -23,3 +24,4 @@ customregexrules:
     pattern: Label
     includepattern: "\\.component$|\\.page$|\\.cls$|\\.email"
     excludepattern: ""
+    cicdmaxissues: 5

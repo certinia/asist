@@ -1,10 +1,14 @@
 package test
 
 import (
+	"bytes"
 	"encoding/json"
 	"reflect"
+	"strings"
 	"testing"
 
+	"github.com/certinia/asist/config"
+	"github.com/certinia/asist/output"
 	"github.com/certinia/asist/rules/standard/codequality"
 	"github.com/certinia/asist/rules/standard/security"
 	"github.com/certinia/asist/scanner"
@@ -781,5 +785,83 @@ func TestDetectImportJavascriptFromFileRule(t *testing.T) {
 		actualResultJson, _ := json.MarshalIndent(projectOutputToPartial(*actualResult), "", "  ")
 		expectedResultJson, _ := json.MarshalIndent(expectedResult, "", "  ")
 		t.Errorf("%s \nActual: %+v, \n\nExpected: %+v", "Actual and expected results are not Equal.", string(actualResultJson), string(expectedResultJson))
+	}
+}
+
+func TestMaxIssues_WhenConfigParsed_MaxIssuesDeserialized(t *testing.T) {
+	//Given
+	const CONFIG_PATH = "./testData/maxissues_config.yaml"
+
+	//When
+	parsedConfig, err := config.ParseConfig(CONFIG_PATH)
+
+	//Then
+	if err != nil {
+		t.Fatalf("Failed to parse maxissues config: %v", err)
+	}
+
+	exposedMax := parsedConfig.GetRuleCicdMaxIssues("ExposedMessageChannel")
+	if exposedMax != 5 {
+		t.Errorf("Expected ExposedMessageChannel cicdmaxissues=5, got %d", exposedMax)
+	}
+
+	protectedMax := parsedConfig.GetRuleCicdMaxIssues("ProtectedCustomSetting")
+	if protectedMax != 1 {
+		t.Errorf("Expected ProtectedCustomSetting cicdmaxissues=1, got %d", protectedMax)
+	}
+
+	// Rule not in config should default to 0
+	unknownMax := parsedConfig.GetRuleCicdMaxIssues("UnknownRule")
+	if unknownMax != 0 {
+		t.Errorf("Expected UnknownRule cicdmaxissues=0, got %d", unknownMax)
+	}
+}
+
+func TestMaxIssues_WhenWithinThreshold_NoViolation(t *testing.T) {
+	//Given - ExposedMessageChannel has maxissues=5 and produces 1 finding
+	createData("./src", security.ExposedMessageChannelRuleID, "./testData/maxissues_config.yaml")
+
+	//When
+	actualResult, _ := scanner.RunRulesOnFiles(filePaths, ruleInstances)
+	actualResult.Count = len(actualResult.Results)
+
+	//Then - should have 1 finding which is within threshold of 5
+	if actualResult.Count != 1 {
+		t.Fatalf("Expected 1 ExposedMessageChannel finding, got %d", actualResult.Count)
+	}
+
+	var buf bytes.Buffer
+	hasViolation := output.CheckThresholdViolations(&buf, actualResult, configFile)
+
+	if hasViolation {
+		t.Errorf("Expected no threshold violation for ExposedMessageChannel (1 finding, max 5), output: %s", buf.String())
+	}
+}
+
+func TestMaxIssues_WhenExceedsThreshold_HasViolation(t *testing.T) {
+	//Given - ProtectedCustomSetting has maxissues=1 and produces 2 findings
+	createData("./src", security.ProtectedCustomSettingRuleID, "./testData/maxissues_config.yaml")
+
+	//When
+	actualResult, _ := scanner.RunRulesOnFiles(filePaths, ruleInstances)
+	actualResult.Count = len(actualResult.Results)
+
+	//Then - should have 2 findings which exceeds threshold of 1
+	if actualResult.Count != 2 {
+		t.Fatalf("Expected 2 ProtectedCustomSetting findings, got %d", actualResult.Count)
+	}
+
+	var buf bytes.Buffer
+	hasViolation := output.CheckThresholdViolations(&buf, actualResult, configFile)
+
+	if !hasViolation {
+		t.Errorf("Expected threshold violation for ProtectedCustomSetting (2 findings, max 1)")
+	}
+	violationOutput := buf.String()
+	if !strings.Contains(violationOutput, "ProtectedCustomSetting") {
+		t.Errorf("Expected ProtectedCustomSetting in violation output, got: %s", violationOutput)
+	}
+	if !strings.Contains(violationOutput, "2 issues (max allowed: 1)") {
+		t.Errorf("Expected '2 issues (max allowed: 1)' in output, got: %s", violationOutput)
 	}
 }

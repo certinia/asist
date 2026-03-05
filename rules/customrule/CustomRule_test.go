@@ -11,6 +11,7 @@ import (
 
 func TestNewCustomRule(t *testing.T) {
 	// Given
+	MAX_5 := 5
 	customRule := config.CustomRegexRule{
 		Name:           "CustomRule1",
 		Description:    "This is sample description for the custom rule",
@@ -19,6 +20,7 @@ func TestNewCustomRule(t *testing.T) {
 		IncludePattern: ".*.cls",
 		ExcludePattern: ".*test.cls$",
 		Pattern:        "pattern",
+		CicdMaxIssues:  &MAX_5,
 	}
 
 	customRuleInstance := rules.RuleMetadata{
@@ -30,6 +32,7 @@ func TestNewCustomRule(t *testing.T) {
 		IncludePattern: customRule.IncludePattern,
 		ExcludePattern: customRule.ExcludePattern,
 		Pattern:        customRule.Pattern,
+		CicdMaxIssues:  5,
 	}
 
 	expectedcustomRuleInstance := CustomRule{
@@ -42,6 +45,23 @@ func TestNewCustomRule(t *testing.T) {
 	// Then
 	if !reflect.DeepEqual(actualCustomRuleInstance, expectedcustomRuleInstance) {
 		t.Errorf("%s Actual: %+v, Expected: %+v", "CustomRule is mismatched!", actualCustomRuleInstance, expectedcustomRuleInstance)
+	}
+}
+
+func TestNewCustomRule_WhenCicdMaxIssuesNotSet_DefaultsToZero(t *testing.T) {
+	// Given
+	customRule := config.CustomRegexRule{
+		Name:     "CustomRule1",
+		Severity: "High",
+		Pattern:  "pattern",
+	}
+
+	// When
+	actualCustomRuleInstance := NewCustomRule(customRule, "custom_rule_1")
+
+	// Then
+	if actualCustomRuleInstance.metadata.CicdMaxIssues != 0 {
+		t.Errorf("Expected CicdMaxIssues to default to 0, got %d", actualCustomRuleInstance.metadata.CicdMaxIssues)
 	}
 }
 

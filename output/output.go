@@ -3,9 +3,11 @@ package output
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"runtime/debug"
+	"sort"
 
 	"time"
 
@@ -41,6 +43,50 @@ func ListRules(ruleInstances []*rules.Rule) {
 }
 
 /**
+ * CheckThresholdViolations checks if any rule exceeds its configured cicdmaxissues.
+ * Default cicdmaxissues is 0 (no issues allowed).
+ * Returns true if any threshold is violated, false otherwise.
+ */
+func CheckThresholdViolations(w io.Writer, finalResult *finding.Output, configFile *config.Config) bool {
+	findingsPerRule := make(map[rules.RuleID]int)
+
+	for _, finding := range finalResult.Results {
+		findingsPerRule[finding.ID]++
+	}
+
+	// Sort rule IDs for deterministic output
+	sortedRuleIds := make([]rules.RuleID, 0, len(findingsPerRule))
+	for ruleId := range findingsPerRule {
+		sortedRuleIds = append(sortedRuleIds, ruleId)
+	}
+	sort.Slice(sortedRuleIds, func(i, j int) bool {
+		return string(sortedRuleIds[i]) < string(sortedRuleIds[j])
+	})
+
+	// Check each rule that has findings
+	violationCount := 0
+
+	for _, ruleId := range sortedRuleIds {
+		count := findingsPerRule[ruleId]
+		maxIssuesAllowed := configFile.GetRuleCicdMaxIssues(ruleId)
+
+		if count > maxIssuesAllowed {
+			if violationCount == 0 {
+				fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationHeader())
+			}
+			fmt.Fprintf(w, "%s\n", message.GetThresholdViolation(string(ruleId), count, maxIssuesAllowed))
+			violationCount++
+		}
+	}
+
+	if violationCount > 0 {
+		fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationSummary(violationCount))
+	}
+
+	return violationCount > 0
+}
+
+/**
  * DisplayOutput - method used to display the output of scans by type
  */
 func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
@@ -56,8 +102,9 @@ func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
 		finalResult.Count = len(finalResult.Results)
 		displayOutput(finalResult)
 
-		//Returns exit 1 in case of the CICD rules defined in the configFile
-		if finalResult.Count > 0 && options.IsCICDScan() {
+		configFile := config.GetConfigInstance()
+
+		if options.IsCICDScan() && CheckThresholdViolations(os.Stderr, finalResult, configFile) {
 			os.Exit(int(errorhandler.ExitCodeOccurrence))
 		}
 	}
