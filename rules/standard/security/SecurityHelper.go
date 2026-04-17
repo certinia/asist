@@ -49,8 +49,12 @@ func findVulnerableLinesBetweenTags(fileToScan files.File, ruleId string, extraV
 				//Search for closing script or style tag at same line
 				isScriptOrStyleClosingTag := closeScriptStyleTagRegexp.MatchString(line.Text)
 				if isScriptOrStyleClosingTag {
-					columnRange[0] = openScriptStyleTagRegexp.FindStringIndex(line.Text)[1]
-					columnRange[1] = closeScriptStyleTagRegexp.FindStringIndex(line.Text)[0]
+					openTagEnd := openScriptStyleTagRegexp.FindStringIndex(line.Text)[1]
+					closeTagMatch := closeScriptStyleTagRegexp.FindStringIndex(line.Text[openTagEnd:])
+					if closeTagMatch != nil {
+						columnRange[0] = openTagEnd
+						columnRange[1] = openTagEnd + closeTagMatch[0]
+					}
 				} else if !isScriptOrStyleClosingTag && !selfCloseScriptStyleTagRegexp.MatchString(line.Text) {
 					hasOpeningScriptOrStyleTagFound = true
 				}
@@ -60,7 +64,7 @@ func findVulnerableLinesBetweenTags(fileToScan files.File, ruleId string, extraV
 		//IF line is between script or style tag
 		if isInsideScriptOrStyleTag {
 			//If column range is present
-			if columnRange[0] != columnRange[1] {
+			if columnRange[0] < columnRange[1] {
 				vulnerableLines = append(vulnerableLines, rules.Occurrence{
 					LineNumber:      line.LineNumber,
 					LineContent:     line.Text,

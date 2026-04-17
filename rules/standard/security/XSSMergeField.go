@@ -55,7 +55,7 @@ func findXssMergeField(fileToScan files.File, ruleMetadata *rules.RuleMetadata) 
 		subLineRange2 := 0
 		tempLineText := line.LineContent
 
-		if len(line.ColumnRange) != 0 {
+		if len(line.ColumnRange) != 0 && line.ColumnRange[0] < line.ColumnRange[1] && line.ColumnRange[1] <= len(line.LineContent) {
 			subLineRange1 = line.ColumnRange[0]
 			subLineRange2 = line.ColumnRange[1]
 			tempLineText = line.LineContent[subLineRange1:subLineRange2]
