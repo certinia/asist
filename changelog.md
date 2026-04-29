@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## \[1.2.1\] \- 2026-04-29
+
+### Fixed
+
+* Fix slice out of bound error for xss rule when closing tag is followed by a new opening tag on the same line (e.g., `</script><script...`).
+* Adjust scan logic of ASIST code so that scanning continue in script/style context when closing tag is followed by a new opening tag on the same line (e.g., `</script><script...`).
+
 ## \[1.2.0\] \- 2026-03-06
 
 ### Added
