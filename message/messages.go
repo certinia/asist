@@ -74,3 +74,7 @@ func GetThresholdViolation(ruleId string, count int, max int) string {
 func GetThresholdViolationSummary(count int) string {
 	return fmt.Sprintf("%d rule(s) exceeded their cicdmaxissues threshold.", count)
 }
+
+func GetNoThresholdViolationSummary() string {
+	return "No rules exceeded their cicdmaxissues threshold."
+}

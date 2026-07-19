@@ -43,47 +43,74 @@ func ListRules(ruleInstances []*rules.Rule) {
 }
 
 /**
+ * countFindingsPerRule counts the findings of each rule.
+ */
+func countFindingsPerRule(finalResult *finding.Output) map[rules.RuleID]int {
+	findingsPerRule := make(map[rules.RuleID]int)
+	for _, finding := range finalResult.Results {
+		findingsPerRule[finding.ID]++
+	}
+	return findingsPerRule
+}
+
+/**
+ * getViolatedRuleIds returns the IDs of rules whose finding count exceeds their
+ * configured cicdmaxissues, sorted for deterministic output.
+ * Default cicdmaxissues is 0 (no issues allowed).
+ */
+func getViolatedRuleIds(findingsPerRule map[rules.RuleID]int, configFile *config.Config) []rules.RuleID {
+	violatedRuleIds := []rules.RuleID{}
+	for ruleId, count := range findingsPerRule {
+		if count > configFile.GetRuleCicdMaxIssues(ruleId) {
+			violatedRuleIds = append(violatedRuleIds, ruleId)
+		}
+	}
+	sort.Slice(violatedRuleIds, func(i, j int) bool {
+		return string(violatedRuleIds[i]) < string(violatedRuleIds[j])
+	})
+	return violatedRuleIds
+}
+
+/**
+ * filterFindingsByRules removes findings that do not belong to the given rules
+ * and updates the result count accordingly.
+ */
+func filterFindingsByRules(finalResult *finding.Output, ruleIds []rules.RuleID) {
+	includedRuleIds := make(map[rules.RuleID]bool, len(ruleIds))
+	for _, ruleId := range ruleIds {
+		includedRuleIds[ruleId] = true
+	}
+
+	filteredResults := []finding.Finding{}
+	for _, finding := range finalResult.Results {
+		if includedRuleIds[finding.ID] {
+			filteredResults = append(filteredResults, finding)
+		}
+	}
+	finalResult.Results = filteredResults
+	finalResult.Count = len(filteredResults)
+}
+
+/**
  * CheckThresholdViolations checks if any rule exceeds its configured cicdmaxissues.
  * Default cicdmaxissues is 0 (no issues allowed).
  * Returns true if any threshold is violated, false otherwise.
  */
 func CheckThresholdViolations(w io.Writer, finalResult *finding.Output, configFile *config.Config) bool {
-	findingsPerRule := make(map[rules.RuleID]int)
+	findingsPerRule := countFindingsPerRule(finalResult)
+	violatedRuleIds := getViolatedRuleIds(findingsPerRule, configFile)
 
-	for _, finding := range finalResult.Results {
-		findingsPerRule[finding.ID]++
+	if len(violatedRuleIds) == 0 {
+		return false
 	}
 
-	// Sort rule IDs for deterministic output
-	sortedRuleIds := make([]rules.RuleID, 0, len(findingsPerRule))
-	for ruleId := range findingsPerRule {
-		sortedRuleIds = append(sortedRuleIds, ruleId)
+	fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationHeader())
+	for _, ruleId := range violatedRuleIds {
+		fmt.Fprintf(w, "%s\n", message.GetThresholdViolation(string(ruleId), findingsPerRule[ruleId], configFile.GetRuleCicdMaxIssues(ruleId)))
 	}
-	sort.Slice(sortedRuleIds, func(i, j int) bool {
-		return string(sortedRuleIds[i]) < string(sortedRuleIds[j])
-	})
+	fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationSummary(len(violatedRuleIds)))
 
-	// Check each rule that has findings
-	violationCount := 0
-
-	for _, ruleId := range sortedRuleIds {
-		count := findingsPerRule[ruleId]
-		maxIssuesAllowed := configFile.GetRuleCicdMaxIssues(ruleId)
-
-		if count > maxIssuesAllowed {
-			if violationCount == 0 {
-				fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationHeader())
-			}
-			fmt.Fprintf(w, "%s\n", message.GetThresholdViolation(string(ruleId), count, maxIssuesAllowed))
-			violationCount++
-		}
-	}
-
-	if violationCount > 0 {
-		fmt.Fprintf(w, "\n%s\n", message.GetThresholdViolationSummary(violationCount))
-	}
-
-	return violationCount > 0
+	return true
 }
 
 /**
@@ -100,13 +127,24 @@ func DisplayOutput(finalResult *finding.Output, scanTime *ScanTime) {
 		finalResult.ScanStartedTime = scanTime.StartedTime
 		finalResult.ScanEndingTime = scanTime.EndingTime
 		finalResult.Count = len(finalResult.Results)
-		displayOutput(finalResult)
 
-		configFile := config.GetConfigInstance()
+		if options.IsCICDScan() {
+			configFile := config.GetConfigInstance()
+			violatedRuleIds := getViolatedRuleIds(countFindingsPerRule(finalResult), configFile)
 
-		if options.IsCICDScan() && CheckThresholdViolations(os.Stderr, finalResult, configFile) {
-			os.Exit(int(errorhandler.ExitCodeOccurrence))
+			if len(violatedRuleIds) > 0 {
+				filterFindingsByRules(finalResult, violatedRuleIds)
+				displayOutput(finalResult)
+				CheckThresholdViolations(os.Stdout, finalResult, configFile)
+				os.Exit(int(errorhandler.ExitCodeOccurrence))
+			}
+
+			displayOutput(finalResult)
+			fmt.Printf("\n%s\n", message.GetNoThresholdViolationSummary())
+			return
 		}
+
+		displayOutput(finalResult)
 	}
 }
 
