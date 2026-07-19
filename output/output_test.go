@@ -335,6 +335,88 @@ func TestCheckThresholdViolations_WhenConfigNil_DefaultsToZero(t *testing.T) {
 	}
 }
 
+func TestGetViolatedRuleIds_ReturnsOnlyBreachedRulesSorted(t *testing.T) {
+	//Given
+	finalResult := &finding.Output{
+		Results: []finding.Finding{
+			{ID: "ZRule"},
+			{ID: "ZRule"},
+			{ID: "ARule"},
+			{ID: "ARule"},
+			{ID: "MRule"},
+		},
+	}
+	configFile := &config.Config{
+		RuleOverrides: map[string]rules.RuleMetadataOverride{
+			"ZRule": {CicdMaxIssues: intPtr(1)}, // 2 > 1, violation
+			"ARule": {CicdMaxIssues: intPtr(1)}, // 2 > 1, violation
+			"MRule": {CicdMaxIssues: intPtr(5)}, // 1 <= 5, no violation
+		},
+	}
+
+	//When
+	violatedRuleIds := getViolatedRuleIds(countFindingsPerRule(finalResult), configFile)
+
+	//Then
+	expectedRuleIds := []rules.RuleID{"ARule", "ZRule"}
+	if !reflect.DeepEqual(violatedRuleIds, expectedRuleIds) {
+		t.Errorf("Expected violated rules %v, got %v", expectedRuleIds, violatedRuleIds)
+	}
+}
+
+func TestFilterFindingsByRules_KeepsOnlyGivenRulesAndUpdatesCount(t *testing.T) {
+	//Given
+	finalResult := &finding.Output{
+		Count: 5,
+		Results: []finding.Finding{
+			{ID: "RuleA", Name: "First A"},
+			{ID: "RuleB"},
+			{ID: "RuleA", Name: "Second A"},
+			{ID: "RuleC"},
+			{ID: "RuleC"},
+		},
+	}
+
+	//When
+	filterFindingsByRules(finalResult, []rules.RuleID{"RuleA", "RuleC"})
+
+	//Then
+	expectedResults := []finding.Finding{
+		{ID: "RuleA", Name: "First A"},
+		{ID: "RuleA", Name: "Second A"},
+		{ID: "RuleC"},
+		{ID: "RuleC"},
+	}
+	if !reflect.DeepEqual(finalResult.Results, expectedResults) {
+		t.Errorf("Expected filtered results %+v, got %+v", expectedResults, finalResult.Results)
+	}
+	if finalResult.Count != 4 {
+		t.Errorf("Expected count 4 after filtering, got %d", finalResult.Count)
+	}
+}
+
+func TestFilterFindingsByRules_WhenNoRulesGiven_RemovesAllFindings(t *testing.T) {
+	//Given
+	finalResult := &finding.Output{
+		Count: 2,
+		Results: []finding.Finding{
+			{ID: "RuleA"},
+			{ID: "RuleB"},
+		},
+	}
+
+	//When
+	filterFindingsByRules(finalResult, []rules.RuleID{})
+
+	//Then
+	if len(finalResult.Results) != 0 {
+		t.Errorf("Expected no results after filtering, got %+v", finalResult.Results)
+	}
+	if finalResult.Count != 0 {
+		t.Errorf("Expected count 0 after filtering, got %d", finalResult.Count)
+	}
+}
+
 func TestCheckThresholdViolations_OutputIsSortedByRuleID(t *testing.T) {
 	//Given
 	finalResult := &finding.Output{
